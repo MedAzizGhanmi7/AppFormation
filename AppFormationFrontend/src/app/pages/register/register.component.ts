@@ -10,6 +10,8 @@ import { AuthenticationService } from 'src/app/services/services';
 })
 export class RegisterComponent {
   isInstructor: boolean = false;
+  selectedPDF: any;
+  selectedFile: string | undefined;
 
   registerRequest: RegistrationRequest = {
     email: '',
@@ -39,34 +41,54 @@ export class RegisterComponent {
   register() {
     this.errorMsg = [];
     if (this.isInstructor) {
-      this.authService
-        .registerInstructor({
-          body: this.registerRequest,
-        })
-        .subscribe({
-          next: () => {
-            this.router.navigate(['activate-account']);
+      if (this.selectedPDF) {
+        this.authService.registerInstructor({
+          body: this.registerRequest
+        }).subscribe({
+          next: (response) => {
+            this.uploadPDFFile(); // Call uploadPDFFile method after registration
           },
           error: (err) => {
-            this.errorMsg = err.error.validationErrors;
-            console.log('error message is ', err.message);
-          },
+            console.log('Registration error: ', err);
+            this.errorMsg = err.error.validationErrors || ['An unexpected error occurred'];
+          }
         });
+      } else {
+        this.errorMsg = ['PDF file is required for instructors'];
+      }
     } else {
-      
-      this.authService
-        .registerParticipant({
-          body: this.registerRequest,
-        })
-        .subscribe({
-          next: () => {
-            this.router.navigate(['activate-account']);
-          },
-          error: (err) => {
-            this.errorMsg = err.error.validationErrors;
-            console.log('error message is ', err.message);
-          },
-        });
+      this.authService.registerParticipant({
+        body: this.registerRequest
+      }).subscribe({
+        next: () => {
+          this.router.navigate(['activate-account']);
+        },
+        error: (err) => {
+          console.log('Registration error: ', err);
+          this.errorMsg = err.error.validationErrors || ['An unexpected error occurred'];
+        }
+      });
+    }
+  }
+
+  uploadPDFFile() {
+    if (this.selectedPDF) {
+      this.authService.uploadFile({
+        'email': this.registerRequest.email,
+        body: {
+          file: this.selectedPDF
+        }
+      }).subscribe({
+        next: () => {
+          this.router.navigate(['activate-account']);
+        },
+        error: (err) => {
+          console.error('File upload error:', err);
+          this.errorMsg = err.error.validationErrors || ['An unexpected error occurred'];
+        }
+      });
+    } else {
+      this.errorMsg = ['No PDF file selected'];
     }
   }
 
@@ -74,10 +96,16 @@ export class RegisterComponent {
     this.isInstructor = event.target.value === 'true';
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.registerRequest.pdfFile = file;
+  onFileSelected(event: any) {
+    this.selectedPDF = event.target.files[0];
+    console.log('Selected PDF:', this.selectedPDF);
+
+    if (this.selectedPDF) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.selectedFile = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedPDF);
     }
   }
 }

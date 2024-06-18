@@ -20,11 +20,42 @@ import { registerInstructor } from '../fn/authentication/register-instructor';
 import { RegisterInstructor$Params } from '../fn/authentication/register-instructor';
 import { registerParticipant } from '../fn/authentication/register-participant';
 import { RegisterParticipant$Params } from '../fn/authentication/register-participant';
+import { uploadFile } from '../fn/authentication/upload-file';
+import { UploadFile$Params } from '../fn/authentication/upload-file';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `uploadFile()` */
+  static readonly UploadFilePath = '/auth/uploadFile/{email}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `uploadFile()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  uploadFile$Response(params: UploadFile$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return uploadFile(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `uploadFile$Response()` instead.
+   *
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
+   */
+  uploadFile(params: UploadFile$Params, context?: HttpContext): Observable<{
+}> {
+    return this.uploadFile$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
   }
 
   /** Path part for operation `register()` */

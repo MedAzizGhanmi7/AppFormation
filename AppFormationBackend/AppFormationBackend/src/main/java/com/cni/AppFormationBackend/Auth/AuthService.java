@@ -2,6 +2,7 @@ package com.cni.AppFormationBackend.Auth;
 
 import com.cni.AppFormationBackend.Email.EmailService;
 import com.cni.AppFormationBackend.Email.EmailTemplateName;
+import com.cni.AppFormationBackend.File.FileStorageService;
 import com.cni.AppFormationBackend.Role.Role;
 import com.cni.AppFormationBackend.Role.RoleRepository;
 import com.cni.AppFormationBackend.Security.JwtService;
@@ -18,13 +19,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import org.springframework.security.core.Authentication;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -37,6 +38,7 @@ public class AuthService {
     private String activationUrl;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final FileStorageService fileStorageService;
 
     public void register(RegistrationRequest request) throws MessagingException {
         var userRole = roleRepository.findByName("USER")
@@ -94,10 +96,16 @@ public class AuthService {
                 .speciality(request.getSpeciality())
                 .company(request.getCompany())
                 .workplace(request.getWorkplace())
-                .pdfFile(request.getPdfFile())
                 .build();
         userRepository.save(user);
         sendValidationEmail(user);
+    }
+    public void uploadFile(MultipartFile file, String connectedUserEmail) {
+
+        User user = userRepository.findByEmail(connectedUserEmail).get();
+        var filepath = fileStorageService.saveFile(file, user.getUserId());
+        user.setPdfFile(filepath);
+        userRepository.save(user);
     }
 
     private void sendValidationEmail(User user) throws MessagingException {

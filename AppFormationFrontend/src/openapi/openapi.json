@@ -8,6 +8,39 @@
     }
   ],
   "paths": {
+    "/auth/uploadFile/{email}": {
+      "post": {
+        "tags": ["Authentication"],
+        "operationId": "uploadFile",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": ["file"],
+                "type": "object",
+                "properties": {
+                  "file": { "type": "string", "format": "binary" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": { "*/*": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": ["Authentication"],

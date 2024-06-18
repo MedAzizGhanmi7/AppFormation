@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.security.core.Authentication;
+import io.swagger.v3.oas.annotations.Parameter;
 
 @RestController
 @RequestMapping("auth")
@@ -39,6 +42,15 @@ public class AuthController {
             @RequestBody @Valid RegistrationRequest request
     ) throws MessagingException {
         authService.registerInstructor(request);
+        return ResponseEntity.accepted().build();
+    }
+    @PostMapping(value = "/uploadFile/{email}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadFile(
+            @Parameter()
+            @RequestPart("file") MultipartFile file,
+            @PathVariable("email") String connectedUserEmail
+    ) {
+        authService.uploadFile(file, connectedUserEmail);
         return ResponseEntity.accepted().build();
     }
 
