@@ -48,6 +48,7 @@ public class User implements UserDetails , Principal {
     private String speciality;
     private String workplace;
     private String company;
+    private String pdfFile;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

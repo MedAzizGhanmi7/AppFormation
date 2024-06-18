@@ -2,6 +2,7 @@ package com.cni.AppFormationBackend.Auth;
 
 import com.cni.AppFormationBackend.Email.EmailService;
 import com.cni.AppFormationBackend.Email.EmailTemplateName;
+import com.cni.AppFormationBackend.Role.Role;
 import com.cni.AppFormationBackend.Role.RoleRepository;
 import com.cni.AppFormationBackend.Security.JwtService;
 import com.cni.AppFormationBackend.User.Token;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -47,6 +49,52 @@ public class AuthService {
                 .accountLocked(false)
                 .enabled(false)
                 .roles(List.of(userRole))
+                .build();
+        userRepository.save(user);
+        sendValidationEmail(user);
+    }
+
+    public void registerParticipant(RegistrationRequest request) throws MessagingException {
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleRepository.findByName("USER").get());
+        userRoles.add(roleRepository.findByName("PARTICIPANT").get());
+
+        var user = User.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .accountLocked(false)
+                .enabled(false)
+                .roles(userRoles)
+                .cin(request.getCin())
+                .phoneNumber(request.getPhoneNumber())
+                .dateOfBirth(request.getDateOfBirth())
+                .build();
+        userRepository.save(user);
+        sendValidationEmail(user);
+    }
+
+    public void registerInstructor(RegistrationRequest request) throws MessagingException {
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleRepository.findByName("USER").get());
+        userRoles.add(roleRepository.findByName("INSTRUCTOR").get());
+
+        var user = User.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .accountLocked(false)
+                .enabled(false)
+                .roles(userRoles)
+                .cin(request.getCin())
+                .phoneNumber(request.getPhoneNumber())
+                .dateOfBirth(request.getDateOfBirth())
+                .speciality(request.getSpeciality())
+                .company(request.getCompany())
+                .workplace(request.getWorkplace())
+                .pdfFile(request.getPdfFile())
                 .build();
         userRepository.save(user);
         sendValidationEmail(user);

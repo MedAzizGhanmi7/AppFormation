@@ -1,5 +1,6 @@
 package com.cni.AppFormationBackend.Auth;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,4 +29,17 @@ public class RegistrationRequest {
     @NotNull(message = "Password is mandatory")
     @Size(min = 8, message = "Password should be 8 characters long minimum")
     private String password;
+    @NotEmpty(message = "cin is mandatory")
+    @NotNull(message = "cin is mandatory")
+    private int cin;
+    @NotEmpty(message = "date of birth is mandatory")
+    @NotNull(message = "date of birth is mandatory")
+    private LocalDate dateOfBirth;
+    @NotEmpty(message = "phoneNumber is mandatory")
+    @NotNull(message = "phoneNumber is mandatory")
+    private String phoneNumber;
+    private String speciality;
+    private String workplace;
+    private String company;
+    private String pdfFile;
 }

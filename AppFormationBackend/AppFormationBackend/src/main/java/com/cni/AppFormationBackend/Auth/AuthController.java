@@ -24,6 +24,24 @@ public class AuthController {
         return ResponseEntity.accepted().build();
     }
 
+    @PostMapping("/registerParticipant")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<?> registerParticipant(
+            @RequestBody @Valid RegistrationRequest request
+    ) throws MessagingException {
+        authService.registerParticipant(request);
+        return ResponseEntity.accepted().build();
+    }
+
+    @PostMapping("/registerInstructor")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<?> registerInstructor(
+            @RequestBody @Valid RegistrationRequest request
+    ) throws MessagingException {
+        authService.registerInstructor(request);
+        return ResponseEntity.accepted().build();
+    }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody @Valid AuthenticationRequest request
