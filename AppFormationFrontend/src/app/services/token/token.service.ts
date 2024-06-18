@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class TokenService {
   isTokenNotValid() {
     return !this.isTokenValid();
   }
-
+*/
   get userRoles(): string[] {
     const token = this.token;
     if (token) {
@@ -42,5 +43,17 @@ export class TokenService {
       return decodedToken.authorities;
     }
     return [];
-  }*/
+  }
+
+
+  get verified(): boolean {
+    const token = this.token;
+    if (token) {
+      const jwtHelper = new JwtHelperService();
+      const decodedToken = jwtHelper.decodeToken(token);
+      console.log(decodedToken.verified);
+      return decodedToken.verified;
+    }
+    return false;
+  }
 }

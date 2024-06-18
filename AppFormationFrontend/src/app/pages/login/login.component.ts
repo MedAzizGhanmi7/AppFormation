@@ -12,6 +12,7 @@ import { TokenService } from 'src/app/services/token/token.service';
 export class LoginComponent {
   authRequest: AuthenticationRequest = {email: '', password: ''};
   errorMsg: Array<string> = [];
+  showMessage:boolean=false;
 
   constructor(
     private router: Router,
@@ -30,7 +31,24 @@ export class LoginComponent {
             const jsonResponse = JSON.parse(text);
             console.log('Token:', jsonResponse.token);
             this.tokenService.token = jsonResponse.token;
-            //this.router.navigate(['books']);
+            const roles = this.tokenService.userRoles
+            console.log('roles',roles)
+            if (roles.includes('PARTICIPANT')) 
+              this.router.navigate(['ParticipantHome']);
+
+            else if(roles.includes('INSTRUCTOR')){
+              const verified = this.tokenService.verified;
+              if(verified){
+                this.router.navigate(['InstructorHome']);
+              }
+              else {
+                this.showMessage= true;
+              }
+
+
+            }
+
+
           }).catch((error) => {
             console.error('Error parsing response:', error);
             this.errorMsg.push('Error parsing server response.');
