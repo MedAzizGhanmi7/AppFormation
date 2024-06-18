@@ -35,7 +35,7 @@ public class User implements UserDetails , Principal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId ;
     @Column(unique = true)
-    private int cin;
+    private String cin;
     private String firstname;
     private String lastname;
     private LocalDate dateOfBirth;

@@ -16,6 +16,10 @@ import { confirm } from '../fn/authentication/confirm';
 import { Confirm$Params } from '../fn/authentication/confirm';
 import { register } from '../fn/authentication/register';
 import { Register$Params } from '../fn/authentication/register';
+import { registerInstructor } from '../fn/authentication/register-instructor';
+import { RegisterInstructor$Params } from '../fn/authentication/register-instructor';
+import { registerParticipant } from '../fn/authentication/register-participant';
+import { RegisterParticipant$Params } from '../fn/authentication/register-participant';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService extends BaseService {
@@ -46,6 +50,64 @@ export class AuthenticationService extends BaseService {
   register(params: Register$Params, context?: HttpContext): Observable<{
 }> {
     return this.register$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `registerParticipant()` */
+  static readonly RegisterParticipantPath = '/auth/registerParticipant';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `registerParticipant()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  registerParticipant$Response(params: RegisterParticipant$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return registerParticipant(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `registerParticipant$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  registerParticipant(params: RegisterParticipant$Params, context?: HttpContext): Observable<{
+}> {
+    return this.registerParticipant$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `registerInstructor()` */
+  static readonly RegisterInstructorPath = '/auth/registerInstructor';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `registerInstructor()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  registerInstructor$Response(params: RegisterInstructor$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return registerInstructor(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `registerInstructor$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  registerInstructor(params: RegisterInstructor$Params, context?: HttpContext): Observable<{
+}> {
+    return this.registerInstructor$Response(params, context).pipe(
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)

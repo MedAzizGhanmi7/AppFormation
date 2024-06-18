@@ -31,9 +31,9 @@ public class RegistrationRequest {
     private String password;
     @NotEmpty(message = "cin is mandatory")
     @NotNull(message = "cin is mandatory")
-    private int cin;
-    @NotEmpty(message = "date of birth is mandatory")
-    @NotNull(message = "date of birth is mandatory")
+    @Size(min = 8, max = 8 ,message = "cin should be 8 characters long")
+    private String cin;
+
     private LocalDate dateOfBirth;
     @NotEmpty(message = "phoneNumber is mandatory")
     @NotNull(message = "phoneNumber is mandatory")
