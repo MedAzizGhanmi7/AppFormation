@@ -6,10 +6,13 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ActivateAccountComponent } from './pages/activate-account/activate-account.component';
 import { InstructorHomeComponent } from './pages/instructor/instructor-home/instructor-home.component';
 import { ParticipantHomeComponent } from './pages/participant/participant-home/participant-home.component';
+import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
+import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
+import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles.component';
 
 const routes: Routes = [
   
-  { path: '', redirectTo: 'register', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   {
     path: 'login',
     component: LoginComponent
@@ -30,6 +33,15 @@ const routes: Routes = [
     path: 'ParticipantHome',
     component: ParticipantHomeComponent
   },
+  {
+    path: 'AdminHome',
+    component: AdminHomeComponent,
+    children: [
+      { path: 'manage-users', component: ManageUsersComponent },
+      { path: 'manage-cycles', component: ManageCyclesComponent }
+    ]
+  }
+  
 
 ];
 

@@ -47,6 +47,9 @@ export class LoginComponent {
 
 
             }
+            else if(roles.includes('ADMIN')) {
+              this.router.navigate(['AdminHome']);
+            }
 
 
           }).catch((error) => {
@@ -58,7 +61,6 @@ export class LoginComponent {
           if (res && res.token) {
             console.log('Token:', res.token);
             this.tokenService.token = res.token as string;
-            //this.router.navigate(['books']);
           } else {
             this.errorMsg.push('Invalid response from server');
           }

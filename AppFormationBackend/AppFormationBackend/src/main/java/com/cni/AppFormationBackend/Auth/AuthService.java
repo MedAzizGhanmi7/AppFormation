@@ -55,6 +55,25 @@ public class AuthService {
         userRepository.save(user);
         sendValidationEmail(user);
     }
+    public void registerAdmin(RegistrationRequest request) throws MessagingException {
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleRepository.findByName("USER").get());
+        userRoles.add(roleRepository.findByName("ADMIN").get());
+
+        var user = User.builder()
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .accountLocked(false)
+                .enabled(true)
+                .roles(userRoles)
+                .cin(request.getCin())
+                .phoneNumber(request.getPhoneNumber())
+                .dateOfBirth(request.getDateOfBirth())
+                .build();
+        userRepository.save(user);
+    }
 
     public void registerParticipant(RegistrationRequest request) throws MessagingException {
         List<Role> userRoles = new ArrayList<>();

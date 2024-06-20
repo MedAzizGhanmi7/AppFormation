@@ -11,6 +11,10 @@ import { ActivateAccountComponent } from './pages/activate-account/activate-acco
 import {CodeInputModule} from 'angular-code-input';
 import { InstructorHomeComponent } from './pages/instructor/instructor-home/instructor-home.component';
 import { ParticipantHomeComponent } from './pages/participant/participant-home/participant-home.component';
+import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
+import { AdminSidebarComponent } from './pages/admin/admin-sidebar/admin-sidebar.component';
+import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
+import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { ParticipantHomeComponent } from './pages/participant/participant-home/p
     RegisterComponent,
     ActivateAccountComponent,
     InstructorHomeComponent,
-    ParticipantHomeComponent
+    ParticipantHomeComponent,
+    AdminHomeComponent,
+    AdminSidebarComponent,
+    ManageUsersComponent,
+    ManageCyclesComponent
   ],
   imports: [
     BrowserModule,
