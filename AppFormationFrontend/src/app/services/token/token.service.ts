@@ -50,13 +50,13 @@ export class TokenService {
   }
 
 
-  get verified(): boolean {
+  get locked(): boolean {
     const token = this.token;
     if (token) {
       const jwtHelper = new JwtHelperService();
       const decodedToken = jwtHelper.decodeToken(token);
-      console.log(decodedToken.verified);
-      return decodedToken.verified;
+      console.log(decodedToken.locked);
+      return decodedToken.locked;
     }
     return false;
   }

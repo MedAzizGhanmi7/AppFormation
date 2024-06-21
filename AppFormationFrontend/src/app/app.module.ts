@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { RegisterComponent } from './pages/register/register.component';
@@ -15,6 +15,7 @@ import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.componen
 import { AdminSidebarComponent } from './pages/admin/admin-sidebar/admin-sidebar.component';
 import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
 import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles.component';
+import { HttpTokenInterceptor } from './services/interceptor/http-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,15 @@ import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles
     FormsModule,
     CodeInputModule
   ],
-  providers: [HttpClient],
+  providers: [
+    HttpClient,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpTokenInterceptor,
+      multi: true
+    },
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

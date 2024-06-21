@@ -1,2 +1,46 @@
-<h1>Main Content</h1>
-<p>Manage Users</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First name</th>
+        <th scope="col">Last name</th>
+        <th scope="col">CIN</th>
+        <th scope="col">email</th>
+        <th scope="col">role</th>
+        <th scope="col">Account lock</th>
+        <th scope="col">Email verification</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <th scope="row">{{ i+1 }}</th>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.cin }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <div *ngFor="let role of user.roles">
+            <span *ngIf="role.name !== 'USER'">{{ role.name }}</span>
+          </div>
+        </td>
+        <td>
+          <i *ngIf="!user.accountLocked" class="bi bi-check-circle" style="color: green;"></i>
+          <i *ngIf="user.accountLocked" class="bi bi-x-circle" style="color: red;"></i>
+        </td>
+        <td>
+          <i *ngIf="user.enabled" class="bi bi-check-circle" style="color: green;"></i>
+          <i *ngIf="!user.enabled" class="bi bi-x-circle" style="color: red;"></i>
+        </td>
+        <td>
+          <button (click)="deleteAccount(user.userId)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+          <button (click)="toggleAccount(user.userId)" class="btn"
+            [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
+            <i class="bi" [ngClass]="{'bi-lock-fill': !user.accountLocked, 'bi-unlock-fill': user.accountLocked}"></i>
+          </button>
+          <button class="btn btn-info"><i class="bi bi-eye-fill"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  

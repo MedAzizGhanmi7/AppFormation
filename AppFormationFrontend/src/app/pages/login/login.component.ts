@@ -7,54 +7,41 @@ import { TokenService } from 'src/app/services/token/token.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  authRequest: AuthenticationRequest = {email: '', password: ''};
+  authRequest: AuthenticationRequest = { email: '', password: '' };
   errorMsg: Array<string> = [];
-  showMessage:boolean=false;
+  showMessage: boolean = false;
 
   constructor(
     private router: Router,
     private authService: AuthenticationService,
     private tokenService: TokenService
-  ) {
-  }
+  ) {}
 
   login() {
     this.errorMsg = [];
     this.authService.authenticate({ body: this.authRequest }).subscribe({
       next: (res) => {
         if (res instanceof Blob) {
-         
           res.text().then((text) => {
-            const jsonResponse = JSON.parse(text);
-            console.log('Token:', jsonResponse.token);
-            this.tokenService.token = jsonResponse.token;
-            const roles = this.tokenService.userRoles
-            console.log('roles',roles)
-            if (roles.includes('PARTICIPANT')) 
-              this.router.navigate(['ParticipantHome']);
+            try {
+              const jsonResponse = JSON.parse(text);
+              console.log('Token:', jsonResponse.token);
+              this.tokenService.token = jsonResponse.token;
+              const roles = this.tokenService.userRoles;
 
-            else if(roles.includes('INSTRUCTOR')){
-              const verified = this.tokenService.verified;
-              if(verified){
+              if (roles.includes('PARTICIPANT'))
+                this.router.navigate(['ParticipantHome']);
+              else if (roles.includes('INSTRUCTOR'))
                 this.router.navigate(['InstructorHome']);
-              }
-              else {
-                this.showMessage= true;
-              }
-
-
+              else if (roles.includes('ADMIN'))
+                this.router.navigate(['AdminHome']);
+            } catch (error) {
+              console.error('Error parsing response:', error);
+              this.errorMsg.push('Error parsing server response.');
             }
-            else if(roles.includes('ADMIN')) {
-              this.router.navigate(['AdminHome']);
-            }
-
-
-          }).catch((error) => {
-            console.error('Error parsing response:', error);
-            this.errorMsg.push('Error parsing server response.');
           });
         } else {
           console.log('Response:', res);
@@ -67,13 +54,37 @@ export class LoginComponent {
         }
       },
       error: (err) => {
-        console.log(err);
-        if (err.error.validationErrors) {
-          this.errorMsg = err.error.validationErrors;
+        console.log('Error object:', err);
+        if (err.error instanceof Blob) {
+          err.error.text().then((text : string) => {
+            const jsonError = JSON.parse(text);
+            if (jsonError.validationErrors) {
+              this.errorMsg = jsonError.validationErrors;
+            } else if (jsonError.businessErrorDescription) {
+              this.errorMsg.push(jsonError.businessErrorDescription);
+            } else if (jsonError.error) {
+              this.errorMsg.push(jsonError.error);
+            } else {
+              this.errorMsg.push('An unknown error occurred.');
+            }
+          }).catch((parseError : Error) => {
+            console.error('Error parsing Blob:', parseError);
+            this.errorMsg.push('Error parsing server response.');
+          });
+        } else if (err.error) {
+          if (err.error.validationErrors) {
+            this.errorMsg = err.error.validationErrors;
+          } else if (err.error.businessErrorDescription) {
+            this.errorMsg.push(err.error.businessErrorDescription);
+          } else if (err.error.error) {
+            this.errorMsg.push(err.error.error);
+          } else {
+            this.errorMsg.push('An unknown error occurred.');
+          }
         } else {
-          this.errorMsg.push(err.error.errorMsg);
+          this.errorMsg.push('An unknown error occurred.');
         }
-      }
+      },
     });
   }
 

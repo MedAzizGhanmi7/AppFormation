@@ -106,9 +106,9 @@ public class AuthService {
                 .lastname(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .accountLocked(false)
+                .accountLocked(true)
                 .enabled(false)
-                .verified(false)
+               // .verified(false)
                 .roles(userRoles)
                 .cin(request.getCin())
                 .phoneNumber(request.getPhoneNumber())
@@ -180,7 +180,7 @@ public class AuthService {
         var claims = new HashMap<String, Object>();
         var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.fullName());
-        claims.put("verified", user.isVerified());
+        claims.put("locked", user.isAccountLocked());
         var jwtToken = jwtService.generateToken(claims, (User) auth.getPrincipal());
         return AuthenticationResponse.builder()
                 .token(jwtToken)

@@ -101,6 +101,33 @@
         }
       }
     },
+    "/auth/registerAdmin": {
+      "post": {
+        "tags": ["Authentication"],
+        "operationId": "registerAdmin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegistrationRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": { "*/*": { "schema": { "type": "object" } } }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Authentication"],
+        "operationId": "logout",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
     "/auth/authenticate": {
       "post": {
         "tags": ["Authentication"],
@@ -120,6 +147,25 @@
               "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/all": {
+      "get": {
+        "tags": ["User"],
+        "operationId": "findAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/User" }
                 }
               }
             }
@@ -188,6 +234,54 @@
       "AuthenticationResponse": {
         "type": "object",
         "properties": { "token": { "type": "string" } }
+      },
+      "GrantedAuthority": {
+        "type": "object",
+        "properties": { "authority": { "type": "string" } }
+      },
+      "Role": {
+        "type": "object",
+        "properties": {
+          "roleId": { "type": "integer", "format": "int64" },
+          "name": { "type": "string" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "userId": { "type": "integer", "format": "int64" },
+          "cin": { "type": "string" },
+          "firstname": { "type": "string" },
+          "lastname": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "date" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "accountLocked": { "type": "boolean" },
+          "enabled": { "type": "boolean" },
+          "verified": { "type": "boolean" },
+          "phoneNumber": { "type": "string" },
+          "speciality": { "type": "string" },
+          "workplace": { "type": "string" },
+          "company": { "type": "string" },
+          "pdfFile": { "type": "string" },
+          "createdDate": { "type": "string", "format": "date-time" },
+          "lastModifiedDate": { "type": "string", "format": "date-time" },
+          "roles": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/Role" }
+          },
+          "name": { "type": "string" },
+          "username": { "type": "string" },
+          "authorities": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/GrantedAuthority" }
+          },
+          "accountNonLocked": { "type": "boolean" },
+          "accountNonExpired": { "type": "boolean" },
+          "credentialsNonExpired": { "type": "boolean" }
+        }
       }
     }
   }
