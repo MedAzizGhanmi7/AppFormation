@@ -9,6 +9,9 @@ import { ParticipantHomeComponent } from './pages/participant/participant-home/p
 import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
 import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
 import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles.component';
+import { ViewUserComponent } from './pages/admin/manage-users/view-user/view-user.component';
+import { ViewCycleComponent } from './pages/admin/manage-cycles/view-cycle/view-cycle.component';
+import { ViewSessionsComponent } from './pages/admin/manage-cycles/view-sessions/view-sessions.component';
 
 const routes: Routes = [
   
@@ -38,7 +41,10 @@ const routes: Routes = [
     component: AdminHomeComponent,
     children: [
       { path: 'manage-users', component: ManageUsersComponent },
-      { path: 'manage-cycles', component: ManageCyclesComponent }
+      { path: 'manage-cycles', component: ManageCyclesComponent },
+      { path: 'view-User/:id', component: ViewUserComponent },
+      { path: 'view-Cycle/:id', component: ViewCycleComponent },
+      { path: 'view-Session/:id', component: ViewSessionsComponent }
     ]
   }
   

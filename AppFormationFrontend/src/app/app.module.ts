@@ -16,6 +16,9 @@ import { AdminSidebarComponent } from './pages/admin/admin-sidebar/admin-sidebar
 import { ManageUsersComponent } from './pages/admin/manage-users/manage-users.component';
 import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles.component';
 import { HttpTokenInterceptor } from './services/interceptor/http-token.interceptor';
+import { ViewUserComponent } from './pages/admin/manage-users/view-user/view-user.component';
+import { ViewCycleComponent } from './pages/admin/manage-cycles/view-cycle/view-cycle.component';
+import { ViewSessionsComponent } from './pages/admin/manage-cycles/view-sessions/view-sessions.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { HttpTokenInterceptor } from './services/interceptor/http-token.intercep
     AdminHomeComponent,
     AdminSidebarComponent,
     ManageUsersComponent,
-    ManageCyclesComponent
+    ManageCyclesComponent,
+    ViewUserComponent,
+    ViewCycleComponent,
+    ViewSessionsComponent
   ],
   imports: [
     BrowserModule,

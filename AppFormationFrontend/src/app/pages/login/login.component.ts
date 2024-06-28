@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { logout } from 'src/app/services/fn/authentication/logout';
 import { AuthenticationRequest } from 'src/app/services/models';
 import { AuthenticationService } from 'src/app/services/services';
 import { TokenService } from 'src/app/services/token/token.service';
@@ -9,7 +10,7 @@ import { TokenService } from 'src/app/services/token/token.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   authRequest: AuthenticationRequest = { email: '', password: '' };
   errorMsg: Array<string> = [];
   showMessage: boolean = false;
@@ -19,6 +20,18 @@ export class LoginComponent {
     private authService: AuthenticationService,
     private tokenService: TokenService
   ) {}
+
+
+  ngOnInit(): void {
+    
+    this.logout();
+    
+  }
+
+  logout(){
+    this.authService.logout().subscribe();
+    this.tokenService.clearToken();
+  }
 
   login() {
     this.errorMsg = [];

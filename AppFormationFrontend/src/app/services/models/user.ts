@@ -2,6 +2,7 @@
 /* eslint-disable */
 import { GrantedAuthority } from '../models/granted-authority';
 import { Role } from '../models/role';
+import { Session } from './session';
 export interface User {
   accountLocked?: boolean;
   accountNonExpired?: boolean;
@@ -27,4 +28,5 @@ export interface User {
   username?: string;
   verified?: boolean;
   workplace?: string;
+  instructorSessions?: Array<Session>;
 }

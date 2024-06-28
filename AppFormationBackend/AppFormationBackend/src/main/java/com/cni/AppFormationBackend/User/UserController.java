@@ -1,20 +1,33 @@
 package com.cni.AppFormationBackend.User;
 
+import com.cni.AppFormationBackend.File.FileStorageService;
+import com.cni.AppFormationBackend.File.FileUtils;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("user")
 @RequiredArgsConstructor
 @Tag(name = "User")
 public class UserController {
     private final UserService userService;
+    private final FileStorageService fileStorageService;
+
 
     @GetMapping("/all")
     public ResponseEntity<List<User>> findAll() throws MessagingException {
@@ -44,4 +57,49 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+        try {
+            User user = userService.getUserById(userId);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @GetMapping("/files/{userId}/uploads/users/{fileId}/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long userId,
+                                                 @PathVariable String fileId,
+                                                 @PathVariable String fileName) {
+        // Construct the file URL
+        String fileUrl = "uploads/users/" + userId + "/" + fileName;
+
+        // Read the file content using FileUtils
+        byte[] fileContent = FileUtils.readFileFromLocation(fileUrl);
+
+        if (fileContent == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        // Create a resource from the byte array
+        ByteArrayResource resource = new ByteArrayResource(fileContent);
+
+        // Determine the content type
+        String contentType = "application/octet-stream";
+
+        // Return the response entity
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(resource);
+    }
+
+
+
+    @GetMapping("/allInstructors/{sessionId}")
+    public ResponseEntity<List<User>> findAllInstructors(@PathVariable("sessionId") Long sessionId) throws MessagingException {
+        List<User> instructors = userService.getAllInstructors(sessionId);
+        return ResponseEntity.ok(instructors);
+    }
 }

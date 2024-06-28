@@ -1,6 +1,7 @@
 package com.cni.AppFormationBackend.User;
 
 import com.cni.AppFormationBackend.Role.Role;
+import com.cni.AppFormationBackend.Session.Session;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -50,6 +51,7 @@ public class User implements UserDetails , Principal {
     private String company;
     private String pdfFile;
 
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
@@ -60,6 +62,12 @@ public class User implements UserDetails , Principal {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Session> instructorSessions;
+
+
 
 
     @Override

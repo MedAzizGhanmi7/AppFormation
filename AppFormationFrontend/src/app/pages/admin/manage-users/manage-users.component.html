@@ -1,4 +1,6 @@
-<table class="table table-striped">
+
+
+  <table class="table table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -25,22 +27,24 @@
           </div>
         </td>
         <td>
-          <i *ngIf="!user.accountLocked" class="bi bi-check-circle" style="color: green;"></i>
-          <i *ngIf="user.accountLocked" class="bi bi-x-circle" style="color: red;"></i>
+          <i *ngIf="!user.accountLocked" class="bi bi-check-circle" style="color: green;">unlocked</i>
+          <i *ngIf="user.accountLocked" class="bi bi-x-circle" style="color: red;">locked</i>
         </td>
         <td>
-          <i *ngIf="user.enabled" class="bi bi-check-circle" style="color: green;"></i>
-          <i *ngIf="!user.enabled" class="bi bi-x-circle" style="color: red;"></i>
+          <i *ngIf="user.enabled" class="bi bi-check-circle" style="color: green;">enabled</i>
+          <i *ngIf="!user.enabled" class="bi bi-x-circle" style="color: red;">disabled</i>
         </td>
         <td>
-          <button (click)="deleteAccount(user.userId)" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-          <button (click)="toggleAccount(user.userId)" class="btn"
-            [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
+          <button (click)="deleteAccount(user.userId)" class="btn btn-danger"><i class="bi bi-trash"></i> delete</button>
+          <button (click)="toggleAccount(user.userId)" class="btn" 
+            [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}"> lock
             <i class="bi" [ngClass]="{'bi-lock-fill': !user.accountLocked, 'bi-unlock-fill': user.accountLocked}"></i>
           </button>
-          <button class="btn btn-info"><i class="bi bi-eye-fill"></i></button>
+          <button [routerLink]="['/AdminHome/view-User', user.userId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> View</button>
         </td>
       </tr>
     </tbody>
   </table>
+
+
   

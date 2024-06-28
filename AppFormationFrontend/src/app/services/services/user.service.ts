@@ -48,6 +48,17 @@ export class UserService extends BaseService {
       return this.http.get<User[]>("http://localhost:8081/api/v1/user/all");
     }
 
+    findAllInstructors(sessionId: number): Observable<User[]> {
+      return this.http.get<User[]>(`http://localhost:8081/api/v1/user/allInstructors/${sessionId}`)
+        .pipe(
+          catchError((error) => {
+            console.error('Find all instructors error:', error);
+            return throwError(error);
+          })
+        );
+    }
+
+
     toggleUserAccount(userId: number) {
       return this.http.put<any>(`http://localhost:8081/api/v1/user/toggleAccount/${userId}`, null, { responseType: 'text' as 'json' })
         .pipe(
@@ -67,4 +78,16 @@ export class UserService extends BaseService {
           })
         );
     }
+
+    getUserById(userId: number): Observable<User> {
+      return this.http.get<User>(`http://localhost:8081/api/v1/user/${userId}`)
+        .pipe(
+          catchError((error) => {
+            console.error('Get user by ID error:', error);
+            return throwError(error);
+          })
+        );
+    }
+
+
 }

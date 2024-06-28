@@ -72,4 +72,11 @@ public class FileStorageService {
         }
         return fileName.substring(lastDotIndex + 1).toLowerCase();
     }
+
+    public Path getFilePath(Long userId, String filename) {
+        Path filePath = Paths.get("uploads", "users", String.valueOf(userId), filename);
+        log.info("File path: {}", filePath.toString());
+        return filePath;
+    }
+
 }

@@ -1,0 +1,33 @@
+<h1>User Details</h1>
+<h4>Firstname: {{ user.firstname }}</h4>
+<h4>Lastname: {{ user.lastname }}</h4>
+<h4>CIN: {{ user.cin }}</h4>
+<h4>Date of Birth: {{ user.dateOfBirth }}</h4>
+<h4>Email: {{ user.email }}</h4>
+<h4>Account Locked: {{ user.accountLocked }}</h4>
+<h4>Enabled: {{ user.enabled }}</h4>
+<h4>Phone Number: {{ user.phoneNumber }}</h4>
+<h4>PDF: {{ user.pdfFile }}</h4>
+
+
+<div *ngFor="let role of user.roles">
+    <h4 *ngIf="role.name !== 'USER'">Role: {{ role.name }}</h4>
+    <div *ngIf="role.name == 'INSTRUCTOR'">{{ role.name }}
+        <h4>Speciality: {{ user.speciality }}</h4>
+        <h4>Workplace: {{ user.workplace }}</h4>
+        <h4>Company: {{ user.company }}</h4>
+        <a *ngIf="user.pdfFile" [href]="getDownloadLink(user.pdfFile)" download>Download PDF</a>
+
+    </div>
+</div>
+
+<i *ngIf="!user.accountLocked" class="bi bi-check-circle" style="color: green;">unlocked</i>
+<i *ngIf="user.accountLocked" class="bi bi-x-circle" style="color: red;">locked</i>
+
+<i *ngIf="user.enabled" class="bi bi-check-circle" style="color: green;">enabled</i>
+<i *ngIf="!user.enabled" class="bi bi-x-circle" style="color: red;">disabled</i>
+
+<button (click)="deleteAccount(user.userId)" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
+<button (click)="toggleAccount(user.userId)" class="btn" [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
+    Lock <i class="bi" [ngClass]="{'bi-lock-fill': !user.accountLocked, 'bi-unlock-fill': user.accountLocked}"></i>
+</button>
