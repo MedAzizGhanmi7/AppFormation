@@ -17,6 +17,9 @@ import { ParticipationsComponent } from './pages/participant/participations/part
 import { PaticipantCycleComponent } from './pages/participant/paticipant-cycle/paticipant-cycle.component';
 import { InstructorSessionsComponent } from './pages/instructor/instructor-sessions/instructor-sessions.component';
 import { InstructorCalendarComponent } from './pages/instructor/instructor-calendar/instructor-calendar.component';
+import { AdminAuthGuard } from './authgards/AdminAuthGuard';
+import { InstructorAuthGuard } from './authgards/InstructorAuthGuard';
+import { ParticipantAuthGuard } from './authgards/ParticipantAuthGuard';
 
 const routes: Routes = [
   
@@ -37,6 +40,7 @@ const routes: Routes = [
   {
     path: 'InstructorHome',
     component: InstructorHomeComponent,
+    canActivate: [InstructorAuthGuard],
     children: [
       { path: 'Sessions', component: InstructorSessionsComponent },
       { path: 'Calendar', component: InstructorCalendarComponent },
@@ -47,6 +51,8 @@ const routes: Routes = [
   {
     path: 'ParticipantHome',
     component: ParticipantHomeComponent,
+    canActivate: [ParticipantAuthGuard],
+
     children: [
       { path: 'available-sessions/:id', component: AvailableSessionsComponent },
       { path: 'participations', component: ParticipationsComponent },
@@ -56,6 +62,7 @@ const routes: Routes = [
   {
     path: 'AdminHome',
     component: AdminHomeComponent,
+    canActivate: [AdminAuthGuard],
     children: [
       { path: 'manage-users', component: ManageUsersComponent },
       { path: 'manage-cycles', component: ManageCyclesComponent },

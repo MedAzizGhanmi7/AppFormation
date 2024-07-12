@@ -49,6 +49,10 @@ export class TokenService {
     return [];
   }
 
+  public hasRole(role: string): boolean {
+    return this.userRoles.includes(role);
+  }
+  
   get userEmail(): string {
     const token = this.token;
     if (token) {
