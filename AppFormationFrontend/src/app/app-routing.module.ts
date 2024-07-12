@@ -12,6 +12,9 @@ import { ManageCyclesComponent } from './pages/admin/manage-cycles/manage-cycles
 import { ViewUserComponent } from './pages/admin/manage-users/view-user/view-user.component';
 import { ViewCycleComponent } from './pages/admin/manage-cycles/view-cycle/view-cycle.component';
 import { ViewSessionsComponent } from './pages/admin/manage-cycles/view-sessions/view-sessions.component';
+import { AvailableSessionsComponent } from './pages/participant/available-sessions/available-sessions.component';
+import { ParticipationsComponent } from './pages/participant/participations/participations.component';
+import { PaticipantCycleComponent } from './pages/participant/paticipant-cycle/paticipant-cycle.component';
 
 const routes: Routes = [
   
@@ -28,13 +31,23 @@ const routes: Routes = [
     path: 'activate-account',
     component: ActivateAccountComponent
   },
+
   {
     path: 'InstructorHome',
-    component: InstructorHomeComponent
+    component: InstructorHomeComponent,
+    children: [
+     // { path: 'view-Session/:id', component: ViewSessionComponent },
+
+    ]
   },
   {
     path: 'ParticipantHome',
-    component: ParticipantHomeComponent
+    component: ParticipantHomeComponent,
+    children: [
+      { path: 'available-sessions/:id', component: AvailableSessionsComponent },
+      { path: 'participations', component: ParticipationsComponent },
+      { path: 'cycles', component: PaticipantCycleComponent },
+    ]
   },
   {
     path: 'AdminHome',

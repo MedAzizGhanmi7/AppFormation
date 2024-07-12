@@ -7,6 +7,7 @@ import com.cni.AppFormationBackend.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,4 +53,46 @@ public class SessionService {
 
         return session;
     }
+
+    public List<Session> getSessionsByInstructorEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getInstructorSessions();
+        } else {
+            throw new RuntimeException("User not found with email: " + email);
+        }
+    }
+
+    public List<Session> getParticipationsByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getParticipantSessions();
+        } else {
+            throw new RuntimeException("User not found with email: " + email);
+        }
+    }
+
+
+    public Session participateInSession(String participantEmail, Long sessionId) {
+        User participant = userRepository.findByEmail(participantEmail)
+                .orElseThrow(() -> new RuntimeException("User not found!"));
+
+        Session session = sessionRepository.findById(sessionId)
+                .orElseThrow(() -> new RuntimeException("Session not found!"));
+
+        if (!participant.getParticipantSessions().contains(session) &&
+                !session.getParticipants().contains(participant)) {
+            participant.getParticipantSessions().add(session);
+            session.getParticipants().add(participant);
+            session.setParticipantCount(session.getParticipantCount() + 1);
+            userRepository.save(participant);
+            return sessionRepository.save(session);
+        }
+
+        return session;
+    }
+
+
 }

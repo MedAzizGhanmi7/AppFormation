@@ -1,78 +1,80 @@
-<div class="container-fluid card login-container">
-  <h3 class="text-center">Create an account</h3>
+<div class="container-fluid card login-container" dir="rtl" style="max-width: 500px; margin: auto;">
+  <h3 class="text-center">إنشاء حساب</h3>
   <hr>
-  <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
-    <p *ngFor="let msg of errorMsg">{{msg}}</p>
-  </div>
+
 
   <!-- Common Fields -->
   <div class="mb-3">
-    <label for="firstname" class="form-label">Firstname</label>
-    <input [(ngModel)]="registerRequest.firstname" type="text" class="form-control" id="firstname" placeholder="Firstname">
+    <label for="firstname" class="form-label">الاسم الأول</label>
+    <input [(ngModel)]="registerRequest.firstname" type="text" class="form-control" id="firstname" placeholder="الاسم الأول">
   </div>
   <div class="mb-3">
-    <label for="lastname" class="form-label">Lastname</label>
-    <input [(ngModel)]="registerRequest.lastname" type="text" class="form-control" id="lastname" placeholder="Lastname">
+    <label for="lastname" class="form-label">اسم العائلة</label>
+    <input [(ngModel)]="registerRequest.lastname" type="text" class="form-control" id="lastname" placeholder="اسم العائلة">
   </div>
   <div class="mb-3">
-    <label for="login" class="form-label">Email address</label>
+    <label for="login" class="form-label">عنوان البريد الإلكتروني</label>
     <input [(ngModel)]="registerRequest.email" type="email" class="form-control" id="login" placeholder="name@example.com">
   </div>
   <div class="mb-3">
-    <label for="password" class="form-label">Password</label>
-    <input [(ngModel)]="registerRequest.password" type="password" class="form-control" id="password" placeholder="Password">
+    <label for="password" class="form-label">كلمة المرور</label>
+    <input [(ngModel)]="registerRequest.password" type="password" class="form-control" id="password" placeholder="كلمة المرور">
   </div>
   <div class="mb-3">
-    <label for="cin" class="form-label">CIN</label>
-    <input [(ngModel)]="registerRequest.cin" type="text" class="form-control" id="cin" placeholder="cin">
+    <label for="cin" class="form-label">رقم الهوية</label>
+    <input [(ngModel)]="registerRequest.cin" type="text" class="form-control" id="cin" placeholder="رقم الهوية">
   </div>
   <div class="mb-3">
-    <label for="phoneNumber" class="form-label">Phone Number</label>
-    <input [(ngModel)]="registerRequest.phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="phoneNumber">
+    <label for="phoneNumber" class="form-label">رقم الهاتف</label>
+    <input [(ngModel)]="registerRequest.phoneNumber" type="text" class="form-control" id="phoneNumber" placeholder="رقم الهاتف">
   </div>
   <div class="mb-3">
-    <label for="dateOfBirth" class="form-label">Date Of Birth</label>
-    <input [(ngModel)]="registerRequest.dateOfBirth" type="date" class="form-control" id="dateOfBirth" placeholder="dateOfBirth">
+    <label for="dateOfBirth" class="form-label">تاريخ الميلاد</label>
+    <input [(ngModel)]="registerRequest.dateOfBirth" type="date" class="form-control" id="dateOfBirth" placeholder="تاريخ الميلاد">
   </div>
 
   <!-- Role Selection -->
   <div class="mb-3">
-    <label for="role" class="form-label">Register as </label>
+    <label for="role" class="form-label">التسجيل كـ </label>
     <select [(ngModel)]="isInstructor" (change)="onRoleChange($event)" class="form-control" id="role">
-      <option [value]="false">Participant</option>
-      <option [value]="true">Instructor</option>
+      <option [value]="false">مشارك</option>
+      <option [value]="true">مدرب</option>
     </select>
   </div>
 
   <!-- Instructor Only Fields -->
   <div *ngIf="isInstructor">
     <div class="mb-3">
-      <label for="company" class="form-label">Company</label>
-      <input [(ngModel)]="registerRequest.company" type="text" class="form-control" id="company" placeholder="Company">
+      <label for="company" class="form-label">الشركة</label>
+      <input [(ngModel)]="registerRequest.company" type="text" class="form-control" id="company" placeholder="الشركة">
     </div>
     <div class="mb-3">
-      <label for="speciality" class="form-label">Speciality</label>
-      <input [(ngModel)]="registerRequest.speciality" type="text" class="form-control" id="speciality" placeholder="Speciality">
+      <label for="speciality" class="form-label">التخصص</label>
+      <input [(ngModel)]="registerRequest.speciality" type="text" class="form-control" id="speciality" placeholder="التخصص">
     </div>
     <div class="mb-3">
-      <label for="workplace" class="form-label">Workplace</label>
-      <input [(ngModel)]="registerRequest.workplace" type="text" class="form-control" id="workplace" placeholder="Workplace">
+      <label for="workplace" class="form-label">مكان العمل</label>
+      <input [(ngModel)]="registerRequest.workplace" type="text" class="form-control" id="workplace" placeholder="مكان العمل">
     </div>
     <div class="mb-3">
-      <label for="pdfFile" class="form-label">Upload CV</label>
+      <label for="pdfFile" class="form-label">تحميل السيرة الذاتية</label>
       <input (change)="onFileSelected($event)" type="file" class="form-control" id="pdfFile">
     </div>
+  </div>
+
+  <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+    <p>{{ translateMessage(errorMsg[0]) }}</p>
   </div>
 
   <!-- Form Submission -->
   <div class="d-flex justify-content-between mb-3">
     <button (click)="register()" type="button" class="btn btn-primary">
-      <em class="fas fa-sign-in-alt">&nbsp;Create an account</em>
+      <em class="fas fa-sign-in-alt">&nbsp;إنشاء حساب</em>
     </button>
     <div>
-      Already have an account?&nbsp;
+      هل لديك حساب بالفعل؟&nbsp;
       <button (click)="login()" type="button" class="btn btn-link">
-        Login
+        تسجيل الدخول
       </button>
     </div>
   </div>

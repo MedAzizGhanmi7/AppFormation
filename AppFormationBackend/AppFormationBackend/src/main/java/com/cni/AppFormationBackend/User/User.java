@@ -67,6 +67,10 @@ public class User implements UserDetails , Principal {
     @JsonIgnore
     private List<Session> instructorSessions;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Session> participantSessions;
+
 
 
 

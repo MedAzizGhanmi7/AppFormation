@@ -49,6 +49,18 @@ export class TokenService {
     return [];
   }
 
+  get userEmail(): string {
+    const token = this.token;
+    if (token) {
+      const jwtHelper = new JwtHelperService();
+      const decodedToken = jwtHelper.decodeToken(token);
+      console.log(decodedToken.sub);
+      return decodedToken.sub;
+    }
+     return "";
+    
+  }
+
 
   get locked(): boolean {
     const token = this.token;

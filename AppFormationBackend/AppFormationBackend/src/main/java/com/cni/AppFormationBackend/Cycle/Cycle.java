@@ -20,6 +20,7 @@ public class Cycle {
     private  String cycleName;
     private LocalDate startDate;
     private LocalDate endDate;
+    private boolean finished=false;
 
     @OneToMany(mappedBy = "cycle", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Session> sessions;

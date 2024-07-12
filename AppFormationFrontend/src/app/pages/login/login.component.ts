@@ -46,11 +46,11 @@ export class LoginComponent implements OnInit {
               const roles = this.tokenService.userRoles;
 
               if (roles.includes('PARTICIPANT'))
-                this.router.navigate(['ParticipantHome']);
+                this.router.navigate(['ParticipantHome/cycles']);
               else if (roles.includes('INSTRUCTOR'))
                 this.router.navigate(['InstructorHome']);
               else if (roles.includes('ADMIN'))
-                this.router.navigate(['AdminHome']);
+                this.router.navigate(['AdminHome/manage-users']);
             } catch (error) {
               console.error('Error parsing response:', error);
               this.errorMsg.push('Error parsing server response.');
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
             } else if (jsonError.error) {
               this.errorMsg.push(jsonError.error);
             } else {
-              this.errorMsg.push('An unknown error occurred.');
+              this.errorMsg.push('حدث خطأ غير معروف');
             }
           }).catch((parseError : Error) => {
             console.error('Error parsing Blob:', parseError);
@@ -92,10 +92,10 @@ export class LoginComponent implements OnInit {
           } else if (err.error.error) {
             this.errorMsg.push(err.error.error);
           } else {
-            this.errorMsg.push('An unknown error occurred.');
+            this.errorMsg.push('حدث خطأ غير معروف');
           }
         } else {
-          this.errorMsg.push('An unknown error occurred.');
+          this.errorMsg.push('حدث خطأ غير معروف');
         }
       },
     });
@@ -103,5 +103,20 @@ export class LoginComponent implements OnInit {
 
   register() {
     this.router.navigate(['register']);
+  }
+
+
+  translateMessage(message: string): string {
+    const translations: { [key: string]: string } = {
+      'Email is mandatory': 'البريد الإلكتروني مطلوب',
+      'Email is not well formatted': 'البريد الإلكتروني غير منسق بشكل جيد',
+      'Password is mandatory': 'كلمة المرور مطلوبة',
+      'Password should be 8 characters long minimum': ' يجب أن تتكون كلمة المرور من 8 أحرف كحد أدنى',
+      'Login and / or Password is incorrect': ' تسجيل الدخول و/أو كلمة المرور غير صحيحة',
+      'User account is disabled': 'حساب المستخدم غير مفعل',
+      'User account is locked': 'حساب المستخدم مقفل',
+
+    };
+    return translations[message] || message;
   }
 }

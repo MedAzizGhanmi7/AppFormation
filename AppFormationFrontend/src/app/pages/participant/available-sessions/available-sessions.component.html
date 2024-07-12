@@ -1,0 +1,45 @@
+<div *ngIf="cycle">
+  <div *ngIf="cycle.sessions && cycle.sessions.length > 0" class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">الإجراءات</th>
+          <th scope="col">انتهت</th>
+          <th scope="col">عدد المشاركين</th>
+          <th scope="col">تاريخ الانتهاء</th>
+          <th scope="col">تاريخ البدء</th>
+          <th scope="col">اسم الجلسة</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of cycle.sessions; let i = index">
+          <ng-container *ngIf="shouldShowParticipateButton(session)">
+            <td>
+              <button (click)="participate(session.sessionId)" class="btn btn-success">
+                <i class="bi bi-plus-square-fill"></i> المشاركة
+              </button>
+            </td>
+            <td>{{ session.finished }}</td>
+            <td>{{ session.participantCount }}</td>
+            <td>{{ session.endDate }}</td>
+            <td>{{ session.startDate }}</td>
+            <td>{{ session.sessionName }}</td>
+            <th scope="row">{{ i + 1 }}</th>
+          </ng-container>
+          <ng-container *ngIf="!shouldShowParticipateButton(session)">
+            <td>
+              <!-- Empty cell when button is hidden -->
+            </td>
+            <td>{{ session.finished }}</td>
+            <td>{{ session.participantCount }}</td>
+            <td>{{ session.endDate }}</td>
+            <td>{{ session.startDate }}</td>
+            <td>{{ session.sessionName }}</td>
+            <th scope="row">{{ i + 1 }}</th>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

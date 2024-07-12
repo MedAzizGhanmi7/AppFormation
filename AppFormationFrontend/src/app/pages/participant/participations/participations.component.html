@@ -1,0 +1,26 @@
+<div *ngIf="participations">
+  <div *ngIf="participations.length > 0" class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">انتهت</th>
+          <th scope="col">عدد المشاركين</th>
+          <th scope="col">تاريخ الانتهاء</th>
+          <th scope="col">تاريخ البدء</th>
+          <th scope="col">اسم الجلسة</th>
+          <th scope="col">#</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of participations; let i = index">
+          <td>{{ session.finished }}</td>
+          <td>{{ session.participantCount }}</td>
+          <td>{{ session.endDate }}</td>
+          <td>{{ session.startDate }}</td>
+          <td>{{ session.sessionName }}</td>
+          <th scope="row">{{ i + 1 }}</th> 
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

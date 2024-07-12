@@ -89,5 +89,15 @@ export class UserService extends BaseService {
         );
     }
 
+    getUserByEmail(email: string): Observable<User> {
+      return this.http.get<User>(`http://localhost:8081/api/v1/user/partipant/${email}`)
+        .pipe(
+          catchError((error) => {
+            console.error('Get user by ID error:', error);
+            return throwError(error);
+          })
+        );
+    }
+
 
 }

@@ -29,4 +29,5 @@ export interface User {
   verified?: boolean;
   workplace?: string;
   instructorSessions?: Array<Session>;
+  participantSessions?: Array<Session>;
 }

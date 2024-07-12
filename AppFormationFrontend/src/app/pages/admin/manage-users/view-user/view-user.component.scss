@@ -1,0 +1,21 @@
+/* Add these styles to your styles.scss or component-specific stylesheet */
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 15px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 8px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  }
+  

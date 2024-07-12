@@ -1,33 +1,73 @@
-<h1>User Details</h1>
-<h4>Firstname: {{ user.firstname }}</h4>
-<h4>Lastname: {{ user.lastname }}</h4>
-<h4>CIN: {{ user.cin }}</h4>
-<h4>Date of Birth: {{ user.dateOfBirth }}</h4>
-<h4>Email: {{ user.email }}</h4>
-<h4>Account Locked: {{ user.accountLocked }}</h4>
-<h4>Enabled: {{ user.enabled }}</h4>
-<h4>Phone Number: {{ user.phoneNumber }}</h4>
-<h4>PDF: {{ user.pdfFile }}</h4>
-
-
-<div *ngFor="let role of user.roles">
-    <h4 *ngIf="role.name !== 'USER'">Role: {{ role.name }}</h4>
-    <div *ngIf="role.name == 'INSTRUCTOR'">{{ role.name }}
-        <h4>Speciality: {{ user.speciality }}</h4>
-        <h4>Workplace: {{ user.workplace }}</h4>
-        <h4>Company: {{ user.company }}</h4>
-        <a *ngIf="user.pdfFile" [href]="getDownloadLink(user.pdfFile)" download>Download PDF</a>
-
+<div class="container my-5">
+    <div class="card p-4 shadow-sm">
+      <h1 class="text-center">تفاصيل المستخدم</h1>
+      <hr>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h4>الاسم الأول: {{ user.firstname }}</h4>
+        </div>
+        <div class="col-md-6">
+          <h4>اسم العائلة: {{ user.lastname }}</h4>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h4>رقم الهوية: {{ user.cin }}</h4>
+        </div>
+        <div class="col-md-6">
+          <h4>تاريخ الميلاد: {{ user.dateOfBirth }}</h4>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h4>البريد الإلكتروني: {{ user.email }}</h4>
+        </div>
+        <div class="col-md-6">
+          <h4>رقم الهاتف: {{ user.phoneNumber }}</h4>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h4>الحساب مقفل: 
+            <i *ngIf="user.accountLocked" class="bi bi-x-circle text-danger">مقفل</i>
+            <i *ngIf="!user.accountLocked" class="bi bi-check-circle text-success">مفتوح</i>
+          </h4>
+        </div>
+        <div class="col-md-6">
+          <h4>مفعل: 
+            <i *ngIf="user.enabled" class="bi bi-check-circle text-success">مفعل</i>
+            <i *ngIf="!user.enabled" class="bi bi-x-circle text-danger">غير مفعل</i>
+          </h4>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h4>ملف PDF: {{ user.pdfFile }}</h4>
+        </div>
+        <div class="col-md-6">
+          <a *ngIf="user.pdfFile" [href]="getDownloadLink(user.pdfFile)" class="btn btn-info" download>تحميل PDF</a>
+        </div>
+      </div>
+      <div *ngFor="let role of user.roles">
+        <div *ngIf="role.name !== 'USER'" class="mb-3">
+          <h4>الدور: {{ role.name }}</h4>
+        </div>
+        <div *ngIf="role.name === 'INSTRUCTOR'">
+          <h4>التخصص: {{ user.speciality }}</h4>
+          <h4>مكان العمل: {{ user.workplace }}</h4>
+          <h4>الشركة: {{ user.company }}</h4>
+        </div>
+      </div>
+      <div class="text-center mt-4">
+        <button (click)="deleteAccount(user.userId)" class="btn btn-danger mx-2">
+          <i class="bi bi-trash"></i> حذف الحساب
+        </button>
+        <button (click)="toggleAccount(user.userId)" class="btn" [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
+          <span *ngIf="user.accountLocked">فتح الحساب</span>
+          <span *ngIf="!user.accountLocked">قفل الحساب</span>
+          <i class="bi" [ngClass]="{'bi-unlock-fill': user.accountLocked, 'bi-lock-fill': !user.accountLocked}"></i>
+        </button>
+      </div>
     </div>
-</div>
-
-<i *ngIf="!user.accountLocked" class="bi bi-check-circle" style="color: green;">unlocked</i>
-<i *ngIf="user.accountLocked" class="bi bi-x-circle" style="color: red;">locked</i>
-
-<i *ngIf="user.enabled" class="bi bi-check-circle" style="color: green;">enabled</i>
-<i *ngIf="!user.enabled" class="bi bi-x-circle" style="color: red;">disabled</i>
-
-<button (click)="deleteAccount(user.userId)" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</button>
-<button (click)="toggleAccount(user.userId)" class="btn" [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
-    Lock <i class="bi" [ngClass]="{'bi-lock-fill': !user.accountLocked, 'bi-unlock-fill': user.accountLocked}"></i>
-</button>
+  </div>
+  

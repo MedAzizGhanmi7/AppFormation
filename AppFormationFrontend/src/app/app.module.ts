@@ -19,6 +19,11 @@ import { HttpTokenInterceptor } from './services/interceptor/http-token.intercep
 import { ViewUserComponent } from './pages/admin/manage-users/view-user/view-user.component';
 import { ViewCycleComponent } from './pages/admin/manage-cycles/view-cycle/view-cycle.component';
 import { ViewSessionsComponent } from './pages/admin/manage-cycles/view-sessions/view-sessions.component';
+import { InstructorNavBarComponent } from './pages/instructor/instructor-nav-bar/instructor-nav-bar.component';
+import { ParticipantNavbarComponent } from './pages/participant/participant-navbar/participant-navbar.component';
+import { AvailableSessionsComponent } from './pages/participant/available-sessions/available-sessions.component';
+import { ParticipationsComponent } from './pages/participant/participations/participations.component';
+import { PaticipantCycleComponent } from './pages/participant/paticipant-cycle/paticipant-cycle.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +39,12 @@ import { ViewSessionsComponent } from './pages/admin/manage-cycles/view-sessions
     ManageCyclesComponent,
     ViewUserComponent,
     ViewCycleComponent,
-    ViewSessionsComponent
+    ViewSessionsComponent,
+    InstructorNavBarComponent,
+    ParticipantNavbarComponent,
+    AvailableSessionsComponent,
+    ParticipationsComponent,
+    PaticipantCycleComponent,
   ],
   imports: [
     BrowserModule,

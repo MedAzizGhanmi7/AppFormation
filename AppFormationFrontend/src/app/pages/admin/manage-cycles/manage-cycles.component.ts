@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Cycle } from 'src/app/services/models/cycle';
 import { CycleServiceService } from 'src/app/services/services/cycle-service.service';
 
@@ -7,8 +7,9 @@ import { CycleServiceService } from 'src/app/services/services/cycle-service.ser
   templateUrl: './manage-cycles.component.html',
   styleUrls: ['./manage-cycles.component.scss']
 })
-export class ManageCyclesComponent {
+export class ManageCyclesComponent implements OnInit{
   cycles: Cycle[] = [];
+
 
   constructor(private cycleService: CycleServiceService) { }
   newCycle: Cycle = { cycleName: '', startDate: '', endDate: '' }; 

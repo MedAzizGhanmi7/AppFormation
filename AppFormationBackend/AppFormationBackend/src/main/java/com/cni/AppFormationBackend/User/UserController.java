@@ -72,23 +72,23 @@ public class UserController {
     public ResponseEntity<Resource> downloadFile(@PathVariable Long userId,
                                                  @PathVariable String fileId,
                                                  @PathVariable String fileName) {
-        // Construct the file URL
+
         String fileUrl = "uploads/users/" + userId + "/" + fileName;
 
-        // Read the file content using FileUtils
+
         byte[] fileContent = FileUtils.readFileFromLocation(fileUrl);
 
         if (fileContent == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        // Create a resource from the byte array
+
         ByteArrayResource resource = new ByteArrayResource(fileContent);
 
-        // Determine the content type
+
         String contentType = "application/octet-stream";
 
-        // Return the response entity
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
                 .contentType(MediaType.parseMediaType(contentType))
@@ -101,5 +101,15 @@ public class UserController {
     public ResponseEntity<List<User>> findAllInstructors(@PathVariable("sessionId") Long sessionId) throws MessagingException {
         List<User> instructors = userService.getAllInstructors(sessionId);
         return ResponseEntity.ok(instructors);
+    }
+
+    @GetMapping("partipant/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        try {
+            User user = userService.getUserByEmail(email);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

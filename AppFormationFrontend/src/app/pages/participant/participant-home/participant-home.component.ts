@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Cycle } from 'src/app/services/models/cycle';
+import { CycleServiceService } from 'src/app/services/services/cycle-service.service';
 
 @Component({
   selector: 'app-participant-home',
@@ -7,4 +9,14 @@ import { Component } from '@angular/core';
 })
 export class ParticipantHomeComponent {
 
+
+
+
+
+
+
+
+
+
+  
 }

@@ -19,6 +19,10 @@ public class CycleService {
         return cycleRepository.findAll();
     }
 
+    public List<Cycle> getAllNotFinishedCycles () {
+        return cycleRepository.findByFinishedIsFalse();
+    }
+
     public Optional<Cycle> getCycle (Long cycleId) {
         return cycleRepository.findById(cycleId);
     }

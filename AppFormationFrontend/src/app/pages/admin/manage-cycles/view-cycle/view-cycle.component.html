@@ -1,57 +1,54 @@
 <div *ngIf="cycle">
-  <h1>Cycle Details</h1>
-  <p><strong>Name:</strong> {{ cycle.cycleName }}</p>
-  <p><strong>Start Date:</strong> {{ cycle.startDate }}</p>
-  <p><strong>End Date:</strong> {{ cycle.endDate }}</p>
+  <h1>تفاصيل الدورة</h1>
+  <p><strong>الاسم:</strong> {{ cycle.cycleName }}</p>
+  <p><strong>تاريخ البدء:</strong> {{ cycle.startDate }}</p>
+  <p><strong>تاريخ الانتهاء:</strong> {{ cycle.endDate }}</p>
 
   <div *ngIf="cycle.sessions">
-    <div *ngIf="cycle.sessions.length>0">
-        <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">sessionName</th>
-                <th scope="col">startDate</th>
-                <th scope="col">endDate</th>
-                <th scope="col">Actions</th>
-          
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let session of cycle.sessions; let i = index">
-                <th scope="row">{{ i+1 }}</th>
-                <td>{{ session.sessionName }}</td>
-                <td>{{ session.startDate }}</td>
-                <td>{{ session.endDate }}</td>
-                <td> <button [routerLink]="['/AdminHome/view-Session', session.sessionId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> View</button>
-                </td>
-          
-              </tr>
-            </tbody>
-          </table>
-   </div>
+    <div *ngIf="cycle.sessions.length > 0">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">اسم الجلسة</th>
+            <th scope="col">تاريخ البدء</th>
+            <th scope="col">تاريخ الانتهاء</th>
+            <th scope="col">الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let session of cycle.sessions; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ session.sessionName }}</td>
+            <td>{{ session.startDate }}</td>
+            <td>{{ session.endDate }}</td>
+            <td>
+              <button [routerLink]="['/AdminHome/view-Session', session.sessionId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> عرض</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
-
-
-<h3>Add Sessions to this Cycle</h3>
+<h3>إضافة جلسات إلى هذه الدورة</h3>
 
 <form (ngSubmit)="addSessionsToCycle()">
   <div class="form-group">
-    <label for="cycleName">session Name</label>
-    <input type="text" class="form-control" id="cycleName" [(ngModel)]="newSession.sessionName" name="cycleName" placeholder="Enter cycle name" required>
+    <label for="sessionName">اسم الجلسة</label>
+    <input type="text" class="form-control" id="sessionName" [(ngModel)]="newSession.sessionName" name="sessionName" placeholder="أدخل اسم الجلسة" required>
   </div>
 
   <div class="form-group">
-    <label for="startDate">Start Date</label>
+    <label for="startDate">تاريخ البدء</label>
     <input type="date" class="form-control" id="startDate" [(ngModel)]="newSession.startDate" name="startDate" required>
   </div>
 
   <div class="form-group">
-    <label for="endDate">End Date</label>
+    <label for="endDate">تاريخ الانتهاء</label>
     <input type="date" class="form-control" id="endDate" [(ngModel)]="newSession.endDate" name="endDate" required>
   </div>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">إرسال</button>
 </form>

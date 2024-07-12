@@ -1,28 +1,29 @@
 <div *ngIf="session">
-    <h1>Session Details</h1>
-    <p><strong>Name:</strong> {{ session.sessionName }}</p>
-    <p><strong>Start Date:</strong> {{ session.startDate }}</p>
-    <p><strong>End Date:</strong> {{ session.endDate }}</p>
-    <p><strong>Participants Count:</strong> {{ session.participantCount }}</p>
-    <p><strong>Assigned Instructors Count:</strong> {{ session.instructors?.length }}</p>
+  <div class="session-details-container">
+    <h1>تفاصيل الجلسة</h1>
+    <p><strong>الاسم:</strong> {{ session.sessionName }}</p>
+    <p><strong>تاريخ البدء:</strong> {{ session.startDate }}</p>
+    <p><strong>تاريخ الانتهاء:</strong> {{ session.endDate }}</p>
+    <p><strong>عدد المشاركين:</strong> {{ session.participantCount }}</p>
+    <p><strong>عدد المدربين المعينين:</strong> {{ session.instructors?.length }}</p>
   
-    <div *ngIf="session.instructors">
-      <div *ngIf="session.instructors.length > 0">
-        <p> <strong>Instructors: </strong>  </p>
-        <p *ngFor="let instructor of session.instructors">
-          {{ instructor.firstname }} {{ instructor.lastname }}
-        </p>
-      </div>
+    <div *ngIf="session.instructors && session.instructors.length > 0">
+      <p><strong>المدربين:</strong></p>
+      <p *ngFor="let instructor of session.instructors">
+        {{ instructor.firstname }} {{ instructor.lastname }}
+      </p>
     </div>
   
-    <p>Available Instructors to add to session</p>
+    <p>المدربون المتاحون لإضافتهم إلى الجلسة</p>
   
-  <select class="form-select" aria-label="Default select example" (change)="onInstructorSelect($event)">
-    <option value="" disabled selected>Select an instructor</option>
-    <option *ngFor="let instructor of instructors" [value]="instructor.userId">
-      {{ instructor.firstname }} {{instructor.userId}}
-    </option>
-  </select>
-    <button type="button" class="btn btn-primary" (click)="addInstructorToSession()">Add Instructor to Session</button>
+    <select class="form-select" aria-label="Default select example" (change)="onInstructorSelect($event)">
+      <option value="" disabled selected>اختر مدربًا</option>
+      <option *ngFor="let instructor of instructors" [value]="instructor.userId">
+        {{ instructor.firstname }} {{ instructor.lastname }}
+      </option>
+    </select>
+    
+    <button type="button" class="btn btn-primary" (click)="addInstructorToSession()">إضافة مدرب إلى الجلسة</button>
   </div>
+  
   

@@ -21,6 +21,10 @@ export class CycleServiceService {
     return this.http.get<Cycle[]>(`${this.apiUrl}/all`);
   }
 
+  getAllNotFinishedCycles(): Observable<Cycle[]> {
+    return this.http.get<Cycle[]>(`${this.apiUrl}/NotFinished`);
+  }
+
   getCycle(cycleId: number): Observable<Cycle> {
     return this.http.get<Cycle>(`${this.apiUrl}/byId/${cycleId}`);
   }

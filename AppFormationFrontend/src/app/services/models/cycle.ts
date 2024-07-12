@@ -8,5 +8,6 @@ export interface Cycle {
   startDate?: string;
   endDate?: string;
   sessions?: Array<Session>;
+  finished?:boolean;
 
 }

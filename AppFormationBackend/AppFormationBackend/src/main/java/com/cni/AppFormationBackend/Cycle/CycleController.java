@@ -32,6 +32,12 @@ public class CycleController {
         return new ResponseEntity<>(cycles, HttpStatus.OK);
     }
 
+    @GetMapping("/NotFinished")
+    public ResponseEntity<List<Cycle>> findAllNotFinished() {
+        List<Cycle> cycles = cycleService.getAllNotFinishedCycles();
+        return new ResponseEntity<>(cycles, HttpStatus.OK);
+    }
+
     @GetMapping("/byId/{cycleId}")
     public ResponseEntity<Cycle> findById(@PathVariable("cycleId") Long cycleId) {
         Cycle cycle = cycleService.getCycle(cycleId)
