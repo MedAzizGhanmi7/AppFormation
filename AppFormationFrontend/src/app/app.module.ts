@@ -24,6 +24,11 @@ import { ParticipantNavbarComponent } from './pages/participant/participant-navb
 import { AvailableSessionsComponent } from './pages/participant/available-sessions/available-sessions.component';
 import { ParticipationsComponent } from './pages/participant/participations/participations.component';
 import { PaticipantCycleComponent } from './pages/participant/paticipant-cycle/paticipant-cycle.component';
+import { InstructorSessionsComponent } from './pages/instructor/instructor-sessions/instructor-sessions.component';
+import { InstructorCalendarComponent } from './pages/instructor/instructor-calendar/instructor-calendar.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -45,13 +50,20 @@ import { PaticipantCycleComponent } from './pages/participant/paticipant-cycle/p
     AvailableSessionsComponent,
     ParticipationsComponent,
     PaticipantCycleComponent,
+    InstructorSessionsComponent,
+    InstructorCalendarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    CodeInputModule
+    CodeInputModule,
+    BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    })
   ],
   providers: [
     HttpClient,

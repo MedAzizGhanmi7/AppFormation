@@ -1,0 +1,59 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">الإجراءات</th>
+          <th scope="col">المدربون</th>
+          <th scope="col">الوحدات</th>
+          <th scope="col">تم التحقق</th>
+          <th scope="col">انتهت</th>
+          <th scope="col">عدد المشاركين</th>
+          <th scope="col">تاريخ الانتهاء</th>
+          <th scope="col">تاريخ البدء</th>
+          <th scope="col">اسم الجلسة</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let session of sessions; let i = index">
+          
+          <td>
+            <button (click)="addModule(session.sessionId)" class="btn btn-info">
+              <i class="bi bi-plus-square-fill"></i> إضافة وحدة للجلسة
+            </button>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let instructor of session.instructors">{{ instructor.firstname }}</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li *ngFor="let module of session.modules">{{ module.moduleName }}</li>
+            </ul>
+          </td>
+          <td>{{ session.validated }}</td>
+          <td>{{ session.finished }}</td>
+          <td>{{ session.participantCount }}</td>
+          <td>{{ session.endDate }}</td>
+          <td>{{ session.startDate }}</td>
+          <td>{{ session.sessionName }}</td>
+          <th scope="row">{{ i + 1 }}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div *ngIf="isAddingModule" class="mt-4">
+    <h3>إضافة وحدة جديدة</h3>
+  
+    <form (ngSubmit)="createModuleAndSetSession()">
+      <div class="form-group">
+        <label for="moduleName">اسم الوحدة</label>
+        <input type="text" class="form-control" id="moduleName" [(ngModel)]="newModule.moduleName" name="moduleName" placeholder="أدخل اسم الوحدة" required>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">إرسال</button>
+    </form>
+  </div>
+  

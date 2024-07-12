@@ -53,7 +53,7 @@ export class RegisterComponent {
           }
         });
       } else {
-        this.errorMsg = ['PDF file is required for instructors'];
+        this.errorMsg = ['PDF لم يتم تحديد ملف '];
       }
     } else {
       this.authService.registerParticipant({
@@ -108,7 +108,7 @@ export class RegisterComponent {
         }
       });
     } else {
-      this.errorMsg = ['No PDF file selected'];
+      this.errorMsg = ['PDF لم يتم تحديد ملف '];
     }
   }
   

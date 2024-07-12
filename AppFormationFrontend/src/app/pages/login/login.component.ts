@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
               if (roles.includes('PARTICIPANT'))
                 this.router.navigate(['ParticipantHome/cycles']);
               else if (roles.includes('INSTRUCTOR'))
-                this.router.navigate(['InstructorHome']);
+                this.router.navigate(['InstructorHome/Sessions']);
               else if (roles.includes('ADMIN'))
                 this.router.navigate(['AdminHome/manage-users']);
             } catch (error) {

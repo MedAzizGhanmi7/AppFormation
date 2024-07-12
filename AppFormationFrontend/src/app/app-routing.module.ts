@@ -15,6 +15,8 @@ import { ViewSessionsComponent } from './pages/admin/manage-cycles/view-sessions
 import { AvailableSessionsComponent } from './pages/participant/available-sessions/available-sessions.component';
 import { ParticipationsComponent } from './pages/participant/participations/participations.component';
 import { PaticipantCycleComponent } from './pages/participant/paticipant-cycle/paticipant-cycle.component';
+import { InstructorSessionsComponent } from './pages/instructor/instructor-sessions/instructor-sessions.component';
+import { InstructorCalendarComponent } from './pages/instructor/instructor-calendar/instructor-calendar.component';
 
 const routes: Routes = [
   
@@ -36,6 +38,8 @@ const routes: Routes = [
     path: 'InstructorHome',
     component: InstructorHomeComponent,
     children: [
+      { path: 'Sessions', component: InstructorSessionsComponent },
+      { path: 'Calendar', component: InstructorCalendarComponent },
      // { path: 'view-Session/:id', component: ViewSessionComponent },
 
     ]
