@@ -1,26 +1,33 @@
-<div *ngIf="participations">
-  <div *ngIf="participations.length > 0" class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">انتهت</th>
-          <th scope="col">عدد المشاركين</th>
-          <th scope="col">تاريخ الانتهاء</th>
-          <th scope="col">تاريخ البدء</th>
-          <th scope="col">اسم الجلسة</th>
-          <th scope="col">#</th> 
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let session of participations; let i = index">
-          <td>{{ session.finished }}</td>
-          <td>{{ session.participantCount }}</td>
-          <td>{{ session.endDate }}</td>
-          <td>{{ session.startDate }}</td>
-          <td>{{ session.sessionName }}</td>
-          <th scope="row">{{ i + 1 }}</th> 
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<div class="filters"  style="direction:rtl ;">
+  <input  type="text" class="form-control" placeholder="ابحث عن جلسة" [(ngModel)]="searchTerm" (ngModelChange)="filterSessions()">
+  <select class="form-control" [(ngModel)]="finishedFilter" (ngModelChange)="filterSessions()">
+    <option value="">الكل</option>
+    <option value="true">انتهت</option>
+    <option value="false">لم تنته</option>
+  </select>
+</div>
+
+<div *ngIf="filteredParticipations.length > 0" class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">انتهت</th>
+        <th scope="col">عدد المشاركين</th>
+        <th scope="col">تاريخ الانتهاء</th>
+        <th scope="col">تاريخ البدء</th>
+        <th scope="col">اسم الجلسة</th>
+        <th scope="col">#</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let session of filteredParticipations; let i = index">
+        <td>{{ session.finished }}</td>
+        <td>{{ session.participantCount }}</td>
+        <td>{{ session.endDate }}</td>
+        <td>{{ session.startDate }}</td>
+        <td>{{ session.sessionName }}</td>
+        <th scope="row">{{ i + 1 }}</th>
+      </tr>
+    </tbody>
+  </table>
 </div>

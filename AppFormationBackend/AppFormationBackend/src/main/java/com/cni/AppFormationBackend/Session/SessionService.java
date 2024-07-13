@@ -5,8 +5,13 @@ import com.cni.AppFormationBackend.Cycle.CycleRepository;
 import com.cni.AppFormationBackend.User.User;
 import com.cni.AppFormationBackend.User.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,4 +100,44 @@ public class SessionService {
     }
 
 
+    public Session validateSession(Long sessionId) {
+        Optional<Session> sessionOptional = sessionRepository.findById(sessionId);
+        if (sessionOptional.isPresent()) {
+            Session session = sessionOptional.get();
+
+            if(session.getParticipantCount()>0){
+                session.setValidated(true);
+                sessionRepository.save(session);
+            }
+
+            return session;
+        } else {
+            throw new RuntimeException("Session not found with id: " + sessionId);
+        }
+    }
+
+    public void deleteSession(Long sessionId) {
+        if (sessionRepository.existsById(sessionId)) {
+            sessionRepository.deleteById(sessionId);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Session not found");
+        }
+    }
+
+    @Transactional
+   // @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 * * * * ?") // Runs every minute
+
+    public void checkFinishedSessions() {
+        LocalDate today = LocalDate.now();
+
+        List<Session> sessions = sessionRepository.findByFinishedIsFalse();
+
+        for (Session session : sessions) {
+            LocalDate endDate = session.getEndDate();
+            if (endDate != null && endDate.isBefore(today)) {
+                session.setFinished(true);
+                sessionRepository.save(session);
+            }
+        }}
 }

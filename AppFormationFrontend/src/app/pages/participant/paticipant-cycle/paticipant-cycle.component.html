@@ -1,3 +1,14 @@
+<div>
+  <input 
+  style="direction: rtl;"
+    type="text" 
+    class="form-control mb-3" 
+    placeholder="ابحث عن اسم الدورة" 
+    [(ngModel)]="searchQuery" 
+    (input)="searchCycles()"
+  />
+</div>
+
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -12,7 +23,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cycle of cycles; let i = index">
+      <tr *ngFor="let cycle of filteredCycles; let i = index">
         <td>
           <button *ngIf="cycle && cycle.sessions && cycle.sessions.length > 0" [routerLink]="['/ParticipantHome/available-sessions', cycle.cycleId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> عرض</button>
         </td>
@@ -22,7 +33,6 @@
         <td>{{ cycle.startDate }}</td>
         <td>{{ cycle.cycleName }}</td>
         <th scope="row">{{ i+1 }}</th>
-     
       </tr>
     </tbody>
   </table>

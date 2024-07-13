@@ -1,59 +1,71 @@
+<div class="filters mb-3 d-flex flex-wrap">
+  <input type="text" class="form-control mb-2 me-2 flex-grow-1" placeholder="ابحث عن جلسة" [(ngModel)]="searchTerm" (ngModelChange)="filterSessions()">
+  
+  <select class="form-control mb-2 me-2" [(ngModel)]="finishedFilter" (ngModelChange)="filterSessions()">
+    <option value="">الكل</option>
+    <option value="true">انتهت</option>
+    <option value="false">لم تنته</option>
+  </select>
+  
+  <select class="form-control mb-2" [(ngModel)]="validatedFilter" (ngModelChange)="filterSessions()">
+    <option value="">الكل</option>
+    <option value="true">تم التحقق</option>
+    <option value="false">لم يتم التحقق</option>
+  </select>
+</div>
+
 <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">الإجراءات</th>
-          <th scope="col">المدربون</th>
-          <th scope="col">الوحدات</th>
-          <th scope="col">تم التحقق</th>
-          <th scope="col">انتهت</th>
-          <th scope="col">عدد المشاركين</th>
-          <th scope="col">تاريخ الانتهاء</th>
-          <th scope="col">تاريخ البدء</th>
-          <th scope="col">اسم الجلسة</th>
-          <th scope="col">#</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let session of sessions; let i = index">
-          
-          <td>
-            <button (click)="addModule(session.sessionId)" class="btn btn-info">
-              <i class="bi bi-plus-square-fill"></i> إضافة وحدة للجلسة
-            </button>
-          </td>
-          <td>
-            <ul>
-              <li *ngFor="let instructor of session.instructors">{{ instructor.firstname }}</li>
-            </ul>
-          </td>
-          <td>
-            <ul>
-              <li *ngFor="let module of session.modules">{{ module.moduleName }}</li>
-            </ul>
-          </td>
-          <td>{{ session.validated }}</td>
-          <td>{{ session.finished }}</td>
-          <td>{{ session.participantCount }}</td>
-          <td>{{ session.endDate }}</td>
-          <td>{{ session.startDate }}</td>
-          <td>{{ session.sessionName }}</td>
-          <th scope="row">{{ i + 1 }}</th>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <div *ngIf="isAddingModule" class="mt-4">
-    <h3>إضافة وحدة جديدة</h3>
-  
-    <form (ngSubmit)="createModuleAndSetSession()">
-      <div class="form-group">
-        <label for="moduleName">اسم الوحدة</label>
-        <input type="text" class="form-control" id="moduleName" [(ngModel)]="newModule.moduleName" name="moduleName" placeholder="أدخل اسم الوحدة" required>
-      </div>
-  
-      <button type="submit" class="btn btn-primary">إرسال</button>
-    </form>
-  </div>
-  
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">الإجراءات</th>
+        <th scope="col">المدربون</th>
+        <th scope="col">الوحدات</th>
+        <th scope="col">تم التحقق</th>
+        <th scope="col">انتهت</th>
+        <th scope="col">عدد المشاركين</th>
+        <th scope="col">تاريخ الانتهاء</th>
+        <th scope="col">تاريخ البدء</th>
+        <th scope="col">اسم الجلسة</th>
+        <th scope="col">#</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let session of filteredSessions; let i = index">
+        <td>
+          <button (click)="addModule(session.sessionId)" class="btn btn-info btn-sm">
+            <i class="bi bi-plus-square-fill"></i> إضافة وحدة للجلسة
+          </button>
+        </td>
+        <td>
+          <ul class="list-unstyled mb-0">
+            <li *ngFor="let instructor of session.instructors">{{ instructor.firstname }}</li>
+          </ul>
+        </td>
+        <td>
+          <ul class="list-unstyled mb-0">
+            <li *ngFor="let module of session.modules">{{ module.moduleName }}</li>
+          </ul>
+        </td>
+        <td>{{ session.validated }}</td>
+        <td>{{ session.finished }}</td>
+        <td>{{ session.participantCount }}</td>
+        <td>{{ session.endDate }}</td>
+        <td>{{ session.startDate }}</td>
+        <td>{{ session.sessionName }}</td>
+        <th scope="row">{{ i + 1 }}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="isAddingModule" class="mt-4 mb-4" style="direction: rtl;">
+  <h3>إضافة وحدة جديدة</h3>
+  <form (ngSubmit)="createModuleAndSetSession()">
+    <div class="form-group">
+      <label for="moduleName">اسم الوحدة</label>
+      <input type="text" class="form-control" id="moduleName" [(ngModel)]="newModule.moduleName" name="moduleName" placeholder="أدخل اسم الوحدة" required>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!newModule.moduleName">إرسال</button>
+  </form>
+</div>

@@ -1,6 +1,6 @@
-<div *ngIf="session">
-  <div class="session-details-container">
-    <h1>تفاصيل الجلسة</h1>
+<div *ngIf="session" class="session-details-container">
+  <h1>تفاصيل الجلسة</h1>
+  <div class="details">
     <p><strong>الاسم:</strong> {{ session.sessionName }}</p>
     <p><strong>تاريخ البدء:</strong> {{ session.startDate }}</p>
     <p><strong>تاريخ الانتهاء:</strong> {{ session.endDate }}</p>
@@ -13,17 +13,23 @@
         {{ instructor.firstname }} {{ instructor.lastname }}
       </p>
     </div>
-  
+  </div>
+
+  <div class="actions">
     <p>المدربون المتاحون لإضافتهم إلى الجلسة</p>
   
-    <select class="form-select" aria-label="Default select example" (change)="onInstructorSelect($event)">
+    <select class="form-select" aria-label="Default select example" (change)="onInstructorSelect($event)" #instructorSelect>
       <option value="" disabled selected>اختر مدربًا</option>
       <option *ngFor="let instructor of instructors" [value]="instructor.userId">
         {{ instructor.firstname }} {{ instructor.lastname }}
       </option>
     </select>
-    
-    <button type="button" class="btn btn-primary" (click)="addInstructorToSession()">إضافة مدرب إلى الجلسة</button>
+
+    <div style="margin-top: 20px;">
+      <button type="button" class="btn btn-primary" (click)="addInstructorToSession()" [disabled]="!instructorSelect.value">إضافة مدرب إلى الجلسة</button>
+      <button routerLink="/AdminHome/manage-cycles" class="btn btn-secondary mx-2">
+        <i class="bi bi-arrow-left-circle"></i> رجوع
+      </button>
+    </div>
   </div>
-  
-  
+</div>

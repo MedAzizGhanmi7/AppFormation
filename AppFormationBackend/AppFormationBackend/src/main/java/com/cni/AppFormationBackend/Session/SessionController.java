@@ -57,4 +57,18 @@ public class SessionController {
         Session updatedSession = sessionService.participateInSession(participantEmail, sessionId);
         return new ResponseEntity<>(updatedSession, HttpStatus.OK);
     }
+
+    @PutMapping("/validate/{sessionId}")
+    public ResponseEntity<Session> validateSession(@PathVariable Long sessionId) {
+        log.info("Validating session with id: {}", sessionId);
+        Session validatedSession = sessionService.validateSession(sessionId);
+        return new ResponseEntity<>(validatedSession, HttpStatus.OK);
+    }
+    @DeleteMapping("/{sessionId}")
+    public ResponseEntity<Void> deleteSession(@PathVariable Long sessionId) {
+        log.info("Deleting session with id: {}", sessionId);
+        sessionService.deleteSession(sessionId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

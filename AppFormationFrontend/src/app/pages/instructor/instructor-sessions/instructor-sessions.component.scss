@@ -1,0 +1,49 @@
+.filters {
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .table-responsive {
+    margin-top: 20px;
+  }
+  
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  
+  .table thead th {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  @media (max-width: 768px) {
+    .filters {
+      flex-direction: column;
+    }
+  
+    .filters .form-control {
+      margin-bottom: 10px;
+    }
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  @media (min-width: 576px) {
+    .mt-4 {
+      margin-top: 1.5rem !important;
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .mb-4 {
+      margin-bottom: 1.5rem !important;
+    }
+  }
+  

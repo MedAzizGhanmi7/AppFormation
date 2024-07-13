@@ -63,7 +63,7 @@ public class User implements UserDetails , Principal {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY , cascade = CascadeType.DETACH)
     @JsonIgnore
     private List<Session> instructorSessions;
 

@@ -13,8 +13,12 @@ export class InstructorSessionsComponent implements OnInit {
   sessionId: number = -1;
   email: string = "";
   sessions: Session[] = [];
+  filteredSessions: Session[] = [];
   newModule: Module = { moduleName: '' };
   isAddingModule: boolean = false;
+  searchTerm: string = '';
+  finishedFilter: string = '';
+  validatedFilter: string = '';
 
   constructor(private tokenService: TokenService, private sessionService: SessionServiceService) { }
 
@@ -26,7 +30,9 @@ export class InstructorSessionsComponent implements OnInit {
   loadSessions(): void {
     this.sessionService.getSessionsByInstructorEmail(this.email).subscribe(
       (sessions: Session[]) => {
-        this.sessions = sessions.filter(s => !s.finished); 
+        this.sessions = sessions;
+        this.filteredSessions = sessions;
+        this.filterSessions();
       },
       (error) => {
         console.error('Error fetching sessions:', error);
@@ -37,9 +43,14 @@ export class InstructorSessionsComponent implements OnInit {
   addModule(id: any) {
     this.sessionId = id;
     this.isAddingModule = true;
+    
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 200); 
   }
-
-  createModuleAndSetSession() {
+  
+  
+  createModuleAndSetSession(): void {
     this.sessionService.createModuleAndSetSession(this.newModule, this.sessionId).subscribe((data: Module) => {
       const session = this.sessions.find(s => s.sessionId === this.sessionId);
       if (session && session.modules) {
@@ -47,6 +58,15 @@ export class InstructorSessionsComponent implements OnInit {
       }
       this.newModule = { moduleName: '' };
       this.isAddingModule = false;
+    });
+  }
+
+  filterSessions(): void {
+    this.filteredSessions = this.sessions.filter(session => {
+      const matchesName = session.sessionName?.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesFinished = this.finishedFilter === '' || session.finished?.toString() === this.finishedFilter;
+      const matchesValidated = this.validatedFilter === '' || session.validated?.toString() === this.validatedFilter;
+      return matchesName && matchesFinished && matchesValidated;
     });
   }
 }

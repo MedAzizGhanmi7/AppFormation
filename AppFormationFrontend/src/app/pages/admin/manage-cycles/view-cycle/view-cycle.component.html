@@ -1,9 +1,4 @@
 <div *ngIf="cycle">
-  <h1>تفاصيل الدورة</h1>
-  <p><strong>الاسم:</strong> {{ cycle.cycleName }}</p>
-  <p><strong>تاريخ البدء:</strong> {{ cycle.startDate }}</p>
-  <p><strong>تاريخ الانتهاء:</strong> {{ cycle.endDate }}</p>
-
   <div *ngIf="cycle.sessions">
     <div *ngIf="cycle.sessions.length > 0">
       <table class="table table-striped">
@@ -13,6 +8,8 @@
             <th scope="col">اسم الجلسة</th>
             <th scope="col">تاريخ البدء</th>
             <th scope="col">تاريخ الانتهاء</th>
+            <th scope="col">finished </th>
+            <th scope="col">validated </th>
             <th scope="col">الإجراءات</th>
           </tr>
         </thead>
@@ -22,8 +19,15 @@
             <td>{{ session.sessionName }}</td>
             <td>{{ session.startDate }}</td>
             <td>{{ session.endDate }}</td>
+            <td>{{ session.finished }}</td>
+            <td>{{ session.validated }}</td>
             <td>
-              <button [routerLink]="['/AdminHome/view-Session', session.sessionId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> عرض</button>
+              <button [routerLink]="['/AdminHome/view-Session', session.sessionId]" class="btn btn-info">
+                <i class="bi bi-eye-fill"></i> عرض
+              </button>
+              <button (click)="validate(session.sessionId)" class="btn btn-info">
+                <i class="bi bi-file-earmark-check"></i> validate Session
+              </button>
             </td>
           </tr>
         </tbody>
@@ -34,21 +38,39 @@
 
 <h3>إضافة جلسات إلى هذه الدورة</h3>
 
-<form (ngSubmit)="addSessionsToCycle()">
+<form [formGroup]="sessionForm" (ngSubmit)="addSessionsToCycle()">
   <div class="form-group">
     <label for="sessionName">اسم الجلسة</label>
-    <input type="text" class="form-control" id="sessionName" [(ngModel)]="newSession.sessionName" name="sessionName" placeholder="أدخل اسم الجلسة" required>
+    <input type="text" class="form-control" id="sessionName" formControlName="sessionName" placeholder="أدخل اسم الجلسة">
+    <div *ngIf="sessionForm.get('sessionName')?.touched && sessionForm.get('sessionName')?.invalid" class="text-danger">
+      اسم الجلسة مطلوب
+    </div>
   </div>
 
   <div class="form-group">
     <label for="startDate">تاريخ البدء</label>
-    <input type="date" class="form-control" id="startDate" [(ngModel)]="newSession.startDate" name="startDate" required>
+    <input type="date" class="form-control" id="startDate" formControlName="startDate">
+    <div *ngIf="sessionForm.get('startDate')?.touched && sessionForm.get('startDate')?.errors?.['invalidDate']" class="text-danger">
+      تاريخ البدء يجب أن يكون اليوم أو بعده
+    </div>
   </div>
 
   <div class="form-group">
     <label for="endDate">تاريخ الانتهاء</label>
-    <input type="date" class="form-control" id="endDate" [(ngModel)]="newSession.endDate" name="endDate" required>
+    <input type="date" class="form-control" id="endDate" formControlName="endDate">
+    <div *ngIf="sessionForm.get('endDate')?.touched && sessionForm.get('endDate')?.errors?.['invalidDate']" class="text-danger">
+      تاريخ الانتهاء يجب أن يكون اليوم أو بعده
+      <div *ngIf="sessionForm.errors?.['invalidDateRange']" class="text-danger">
+        تاريخ البدء يجب أن يكون قبل تاريخ الانتهاء
+      </div>
+    </div>
+   
   </div>
 
-  <button type="submit" class="btn btn-primary">إرسال</button>
+  <div style="margin: 20px;">
+    <button type="submit" class="btn btn-primary" [disabled]="!sessionForm.valid">إرسال</button>
+    <button routerLink="/AdminHome/manage-cycles" class="btn btn-secondary mx-2">
+      <i class="bi bi-arrow-left-circle"></i> رجوع
+    </button>
+  </div>
 </form>

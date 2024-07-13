@@ -45,4 +45,11 @@ export class SessionServiceService {
   participateInSession(sessionId: number, participantEmail: string): Observable<Session> {
     return this.http.post<Session>(`${this.apiUrl}/participate/${sessionId}/${participantEmail}`, null);
   }
+
+  validateSession(sessionId: number): Observable<Session> {
+    return this.http.put<Session>(`${this.apiUrl}/validate/${sessionId}`, null);
+  }
+  deleteSession(sessionId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${sessionId}`);
+  }
 }

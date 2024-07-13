@@ -30,12 +30,14 @@ public class Session {
     @JsonIgnore
     private Cycle cycle;
 
-    @ManyToMany(mappedBy = "instructorSessions", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "sessions", fetch = FetchType.LAZY,cascade = CascadeType.DETACH)
+    private List<Module> modules;
+
+    @ManyToMany(mappedBy = "instructorSessions", fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
     private List<User> instructors;
 
-    @ManyToMany(mappedBy = "participantSessions", fetch = FetchType.LAZY)
+
+    @ManyToMany(mappedBy = "participantSessions", fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     private List<User> participants;
 
-    @ManyToMany(mappedBy = "sessions", fetch = FetchType.LAZY)
-    private List<Module> modules;
 }
