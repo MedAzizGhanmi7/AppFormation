@@ -1,58 +1,67 @@
-<h3>إدارة الدورات</h3>
+<div class="container">
+  <h3 class="text-center mb-4">إدارة الدورات</h3>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">اسم الدورة</th>
-      <th scope="col">تاريخ البدء</th>
-      <th scope="col">تاريخ الانتهاء</th>
-      <th scope="col">الإجراءات</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let cycle of cycles; let i = index">
-      <th scope="row">{{ i + 1 }}</th>
-      <td>{{ cycle.cycleName }}</td>
-      <td>{{ cycle.startDate }}</td>
-      <td>{{ cycle.endDate }}</td>
-      <td>
-        <button [routerLink]="['/AdminHome/view-Cycle', cycle.cycleId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> عرض</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">اسم الدورة</th>
+          <th scope="col">تاريخ البدء</th>
+          <th scope="col">تاريخ الانتهاء</th>
+          <th scope="col"> الانتهاء</th>
+          <th scope="col"> عدد الجلسات</th>
+          <th scope="col">الإجراءات</th>
 
-<h3>إضافة دورة جديدة</h3>
-
-<form [formGroup]="cycleForm" (ngSubmit)="addCycle()">
-  <div class="form-group">
-    <label for="cycleName">اسم الدورة</label>
-    <input type="text" class="form-control" id="cycleName" formControlName="cycleName" placeholder="أدخل اسم الدورة">
-    <div *ngIf="cycleForm.get('cycleName')?.touched && cycleForm.get('cycleName')?.invalid" class="text-danger">
-      اسم الدورة مطلوب
-    </div>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cycle of cycles; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ cycle.cycleName }}</td>
+          <td>{{ cycle.startDate }}</td>
+          <td>{{ cycle.endDate }}</td>
+          <td *ngIf="cycle.finished"><i class="bi bi-patch-check-fill text-success"></i></td>
+          <td *ngIf="!cycle.finished"><i class="bi bi-x-circle-fill text-danger"></i></td>
+          <td>{{ cycle.sessions?.length }}</td>
+          <td>
+            <button [routerLink]="['/AdminHome/view-Cycle', cycle.cycleId]" class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i> عرض</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="form-group">
-    <label for="startDate">تاريخ البدء</label>
-    <input type="date" class="form-control" id="startDate" formControlName="startDate">
-    <div *ngIf="cycleForm.get('startDate')?.touched && cycleForm.get('startDate')?.errors?.['invalidDate']" class="text-danger">
-      تاريخ البدء يجب أن يكون اليوم أو بعده
-    </div>
-  </div>
+  <h3 class="mt-5 mb-4">إضافة دورة جديدة</h3>
 
-  <div class="form-group">
-    <label for="endDate">تاريخ الانتهاء</label>
-    <input type="date" class="form-control" id="endDate" formControlName="endDate">
-    <div *ngIf="cycleForm.get('endDate')?.touched && cycleForm.get('endDate')?.errors?.['invalidDate']" class="text-danger">
-      تاريخ الانتهاء يجب أن يكون اليوم أو بعده
-      <div *ngIf="cycleForm.errors?.['invalidDateRange']" class="text-danger">
-        تاريخ البدء يجب أن يكون قبل تاريخ الانتهاء
+  <form [formGroup]="cycleForm" (ngSubmit)="addCycle()">
+    <div class="form-group">
+      <label for="cycleName">اسم الدورة</label>
+      <input type="text" class="form-control" id="cycleName" formControlName="cycleName" placeholder="أدخل اسم الدورة">
+      <div *ngIf="cycleForm.get('cycleName')?.touched && cycleForm.get('cycleName')?.invalid" class="text-danger">
+        اسم الدورة مطلوب
       </div>
     </div>
- 
-  </div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="!cycleForm.valid">إرسال</button>
-</form>
+    <div class="form-group">
+      <label for="startDate">تاريخ البدء</label>
+      <input type="date" class="form-control" id="startDate" formControlName="startDate">
+      <div *ngIf="cycleForm.get('startDate')?.touched && cycleForm.get('startDate')?.errors?.['invalidDate']" class="text-danger">
+        تاريخ البدء يجب أن يكون اليوم أو بعده
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">تاريخ الانتهاء</label>
+      <input type="date" class="form-control" id="endDate" formControlName="endDate">
+      <div *ngIf="cycleForm.get('endDate')?.touched && cycleForm.get('endDate')?.errors?.['invalidDate']" class="text-danger">
+        تاريخ الانتهاء يجب أن يكون اليوم أو بعده
+        <div *ngIf="cycleForm.errors?.['invalidDateRange']" class="text-danger">
+          تاريخ البدء يجب أن يكون قبل تاريخ الانتهاء
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="!cycleForm.valid">إرسال</button>
+  </form>
+</div>

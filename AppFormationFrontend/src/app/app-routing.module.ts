@@ -20,6 +20,7 @@ import { InstructorCalendarComponent } from './pages/instructor/instructor-calen
 import { AdminAuthGuard } from './authgards/AdminAuthGuard';
 import { InstructorAuthGuard } from './authgards/InstructorAuthGuard';
 import { ParticipantAuthGuard } from './authgards/ParticipantAuthGuard';
+import { RegisterAdminComponent } from './pages/admin/register-admin/register-admin.component';
 
 const routes: Routes = [
   
@@ -68,7 +69,8 @@ const routes: Routes = [
       { path: 'manage-cycles', component: ManageCyclesComponent },
       { path: 'view-User/:id', component: ViewUserComponent },
       { path: 'view-Cycle/:id', component: ViewCycleComponent },
-      { path: 'view-Session/:id', component: ViewSessionsComponent }
+      { path: 'view-Session/:id', component: ViewSessionsComponent },
+       { path: 'RegisterAdmin', component: RegisterAdminComponent }
     ]
   }
   

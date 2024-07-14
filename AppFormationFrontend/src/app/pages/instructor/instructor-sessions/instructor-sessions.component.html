@@ -1,4 +1,4 @@
-<div class="filters mb-3 d-flex flex-wrap">
+<div style="direction: rtl;" class="filters mb-3 d-flex flex-wrap">
   <input type="text" class="form-control mb-2 me-2 flex-grow-1" placeholder="ابحث عن جلسة" [(ngModel)]="searchTerm" (ngModelChange)="filterSessions()">
   
   <select class="form-control mb-2 me-2" [(ngModel)]="finishedFilter" (ngModelChange)="filterSessions()">
@@ -47,8 +47,9 @@
             <li *ngFor="let module of session.modules">{{ module.moduleName }}</li>
           </ul>
         </td>
-        <td>{{ session.validated }}</td>
-        <td>{{ session.finished }}</td>
+        <td *ngIf="session.validated"><i class="bi bi-patch-check-fill text-success"></i></td>
+        <td *ngIf="!session.validated"><i class="bi bi-x-circle-fill text-danger"></i></td>        <td *ngIf="session.finished"><i class="bi bi-patch-check-fill text-success"></i></td>
+        <td *ngIf="!session.finished"><i class="bi bi-x-circle-fill text-danger"></i></td>
         <td>{{ session.participantCount }}</td>
         <td>{{ session.endDate }}</td>
         <td>{{ session.startDate }}</td>

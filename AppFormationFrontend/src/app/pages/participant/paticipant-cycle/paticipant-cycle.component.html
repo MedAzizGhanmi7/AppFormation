@@ -27,8 +27,8 @@
         <td>
           <button *ngIf="cycle && cycle.sessions && cycle.sessions.length > 0" [routerLink]="['/ParticipantHome/available-sessions', cycle.cycleId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> عرض</button>
         </td>
-        <td>{{ cycle.finished }}</td>
-        <td>{{ cycle.sessions?.length }}</td>
+        <td *ngIf="cycle.finished"><i class="bi bi-patch-check-fill text-success"></i></td>
+        <td *ngIf="!cycle.finished"><i class="bi bi-x-circle-fill text-danger"></i></td>        <td>{{ cycle.sessions?.length }}</td>
         <td>{{ cycle.endDate }}</td>
         <td>{{ cycle.startDate }}</td>
         <td>{{ cycle.cycleName }}</td>

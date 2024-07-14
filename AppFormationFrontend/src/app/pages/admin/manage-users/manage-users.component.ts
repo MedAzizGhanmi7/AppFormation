@@ -54,16 +54,18 @@ export class ManageUsersComponent implements OnInit {
 
   deleteAccount(userId: number | undefined) {
     if (userId) {
-      this.userService.deleteUserAccount(userId).subscribe({
-        next: () => {
-          this.users = this.users.filter(user => user.userId !== userId);
-          this.applyFilters();
-          console.log(`User with ID ${userId} deleted successfully`);
-        },
-        error: (error) => {
-          console.error('Error deleting account', error);
-        }
-      });
+      if (window.confirm('هل أنت متأكد أنك تريد حذف هذا المستخدم؟')) {
+        this.userService.deleteUserAccount(userId).subscribe({
+          next: () => {
+            this.users = this.users.filter(user => user.userId !== userId);
+            this.applyFilters();
+            console.log(`User with ID ${userId} deleted successfully`);
+          },
+          error: (error) => {
+            console.error('Error deleting account', error);
+          }
+        });
+      }
     }
   }
 

@@ -29,6 +29,7 @@ import { InstructorCalendarComponent } from './pages/instructor/instructor-calen
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegisterAdminComponent } from './pages/admin/register-admin/register-admin.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     PaticipantCycleComponent,
     InstructorSessionsComponent,
     InstructorCalendarComponent,
+    RegisterAdminComponent,
   ],
   imports: [
     BrowserModule,

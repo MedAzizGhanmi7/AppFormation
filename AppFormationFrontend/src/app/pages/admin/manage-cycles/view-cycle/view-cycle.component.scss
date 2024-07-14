@@ -1,29 +1,36 @@
 .session-details-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  direction: rtl;
+}
+
+.session-details-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.session-details-container form {
+  direction: rtl;
+}
+
+@media (max-width: 768px) {
+  .session-details-container {
+    padding: 10px;
   }
-  
-  .session-details-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .session-details-container p {
-    margin-bottom: 10px;
-  }
-  
-  .session-details-container select {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  
-  @media (max-width: 768px) {
-    .session-details-container {
-      padding: 10px;
-    }
-  }
-  
+}
+
+button {
+  margin: 5px;
+}
+
+.text-success {
+  color: green;
+}
+
+.text-danger {
+  color: red; 
+}
+

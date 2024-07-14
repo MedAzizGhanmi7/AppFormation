@@ -11,6 +11,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
+        <th scope="col">تم التحقق</th>
         <th scope="col">انتهت</th>
         <th scope="col">عدد المشاركين</th>
         <th scope="col">تاريخ الانتهاء</th>
@@ -21,7 +22,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let session of filteredParticipations; let i = index">
-        <td>{{ session.finished }}</td>
+        <td *ngIf="session.validated"><i class="bi bi-patch-check-fill text-success"></i></td>
+        <td *ngIf="!session.validated"><i class="bi bi-x-circle-fill text-danger"></i></td>
+        <td *ngIf="session.finished"><i class="bi bi-patch-check-fill text-success"></i></td>
+        <td *ngIf="!session.finished"><i class="bi bi-x-circle-fill text-danger"></i></td>
         <td>{{ session.participantCount }}</td>
         <td>{{ session.endDate }}</td>
         <td>{{ session.startDate }}</td>
