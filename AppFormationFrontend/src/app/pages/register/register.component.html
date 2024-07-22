@@ -1,7 +1,6 @@
-<div class="container-fluid card login-container" dir="rtl" style="max-width: 500px; margin: auto;">
-  <h3 class="text-center">إنشاء حساب</h3>
-  <hr>
-
+<div class="container-fluid card login-container" dir="rtl" style="max-width: 500px; margin: auto; padding: 20px; border-radius: 10px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);">
+  <h3 class="text-center mb-4">إنشاء حساب</h3>
+  <hr class="mb-4">
 
   <!-- Common Fields -->
   <div class="mb-3">
@@ -30,7 +29,7 @@
   </div>
   <div class="mb-3">
     <label for="dateOfBirth" class="form-label">تاريخ الميلاد</label>
-    <input [(ngModel)]="registerRequest.dateOfBirth" type="date" class="form-control" id="dateOfBirth" placeholder="تاريخ الميلاد">
+    <input [(ngModel)]="registerRequest.dateOfBirth" type="date" class="form-control" id="dateOfBirth">
   </div>
 
   <!-- Role Selection -->
@@ -79,3 +78,4 @@
     </div>
   </div>
 </div>
+

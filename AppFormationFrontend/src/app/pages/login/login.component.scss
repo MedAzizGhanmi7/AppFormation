@@ -1,0 +1,24 @@
+.login-container {
+    background-color: #ffffff;
+  }
+
+  @media (max-width: 576px) {
+    .login-container {
+      padding: 15px;
+      box-shadow: none;
+    }
+
+    .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .d-flex {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .d-flex > div {
+      width: 100%;
+      text-align: center;
+    }
+  }

@@ -1,29 +1,21 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
-  <div class="container">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<header class="header">
+  <img src="../../../../assets/images/logo cni.png" alt="Logo" class="logo">
+  <nav class="nav-links">
+    <ul>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/InstructorHome/Sessions">
+          <i class="bi bi-plus-circle"></i> إضافة وحدة 
+          <span class="sr-only">(current)</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/InstructorHome/Calendar">
+          <i class="bi bi-calendar-date"></i>  جدول مواعيدي
+        </a>
+      </li>
+      <li>      <a href="#" (click)="logout()"> <i class="bi bi-box-arrow-left"></i> تسجيل خروج</a>
+      </li>
 
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/InstructorHome/Sessions">
-            <i class="bi bi-plus-circle"></i> إضافة وحدة 
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/InstructorHome/Calendar">
-            <i class="bi bi-calendar-date"></i>  جدول مواعيدي
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" (click)="logout()">
-            <i class="bi bi-box-arrow-right"></i> تسجيل خروج
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+    </ul>
+  </nav>
+</header>

@@ -8,18 +8,22 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
-  <aside class="sidebar">
-    <app-admin-sidebar>
+  <header class="header">
+    <img src="../../../../assets/images/logo cni.png" alt="Logo" class="logo">
+    <nav class="nav-links">
+      <ul>
+        <li><a href="AdminHome/manage-cycles"><i class="bi bi-card-text"></i> إدارة الدورات</a></li>
+        <li><a href="AdminHome/manage-users"><i class="bi bi-people-fill"></i> ادارة المستخدمين</a></li>
+        <li><a href="AdminHome/RegisterAdmin"><i class="bi bi-plus-circle"></i> إضافة مشرف جديد</a></li>
+        <li>      <a href="#" (click)="logout()"> <i class="bi bi-box-arrow-left"></i> تسجيل خروج</a>
+        </li>
 
-    </app-admin-sidebar>
+      </ul>
+    </nav>
+  </header>
 
- 
-  </aside>
   <div class="content">
-    
     <router-outlet></router-outlet>
   </div>
 </body>
-
-
 </html>

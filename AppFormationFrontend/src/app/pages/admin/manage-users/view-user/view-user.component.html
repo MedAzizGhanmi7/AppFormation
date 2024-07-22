@@ -1,39 +1,40 @@
-<div class="container my-5 text-right"> <!-- Added 'text-right' class -->
+<div class="container my-5 text-right"> <!-- RTL text direction applied -->
   <div class="card p-4 shadow-sm">
-    <h1 class="text-center">تفاصيل المستخدم</h1>
+    <h1 class="text-center mb-4">تفاصيل المستخدم</h1>
     <hr>
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <h4>الاسم الأول: {{ user.firstname }}</h4> <!-- Swapped order to match Arabic convention -->
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3">
+        <h4 class="border-bottom pb-2"> {{ user.lastname }} : اسم العائلة </h4>
       </div>
-      <div class="col-md-6">
-        <h4>اسم العائلة: {{ user.lastname }}</h4>
+      <div class="col-md-6 mb-3">
+        <h4 class="border-bottom pb-2">  {{ user.firstname }} : الاسم</h4> <!-- Added border-bottom and padding for better separation -->
+      </div>
+
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3">
+        <h4 class="border-bottom pb-2">رقم الهوية: {{ user.cin }}</h4>
+      </div>
+      <div class="col-md-6 mb-3">
+        <h4 class="border-bottom pb-2">تاريخ الميلاد: {{ user.dateOfBirth | date:'dd/MM/yyyy' }}</h4>
       </div>
     </div>
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <h4>رقم الهوية: {{ user.cin }}</h4>
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3">
+        <h4 class="border-bottom pb-2"> {{ user.email }} : البريد الإلكتروني</h4>
       </div>
-      <div class="col-md-6">
-        <h4>تاريخ الميلاد: {{ user.dateOfBirth }}</h4>
-      </div>
-    </div>
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <h4>البريد الإلكتروني: {{ user.email }}</h4>
-      </div>
-      <div class="col-md-6">
-        <h4>رقم الهاتف: {{ user.phoneNumber }}</h4>
+      <div class="col-md-6 mb-3">
+        <h4 class="border-bottom pb-2">رقم الهاتف: {{ user.phoneNumber }}</h4>
       </div>
     </div>
-    <div class="row mb-3">
-      <div class="col-md-6">
+    <div class="row mb-4">
+      <div class="col-md-6 mb-3">
         <h4>مقفل:
           <i *ngIf="user.accountLocked" class="bi bi-x-circle text-danger"> مقفل</i>
           <i *ngIf="!user.accountLocked" class="bi bi-check-circle text-success"> مفتوح</i>
         </h4>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 mb-3">
         <h4>مفعل:
           <i *ngIf="user.enabled" class="bi bi-check-circle text-success"> مفعل</i>
           <i *ngIf="!user.enabled" class="bi bi-x-circle text-danger"> غير مفعل</i>
@@ -41,21 +42,23 @@
       </div>
     </div>
 
-
-
     <div class="text-center mt-4">
-      <button (click)="deleteAccount(user.userId)" class="btn btn-danger mx-2">
+      <button (click)="deleteAccount(user.userId)" class="btn btn-danger mx-2 mb-2">
         <i class="bi bi-trash"></i> حذف الحساب
       </button>
-      <button (click)="toggleAccount(user.userId)" class="btn" [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
+      <button (click)="toggleAccount(user.userId)" class="btn mx-2 mb-2" [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}">
         <span *ngIf="user.accountLocked">فتح الحساب</span>
         <span *ngIf="!user.accountLocked">قفل الحساب</span>
         <i class="bi" [ngClass]="{'bi-unlock-fill': user.accountLocked, 'bi-lock-fill': !user.accountLocked}"></i>
       </button>
-      <button routerLink="/AdminHome/manage-users" class="btn btn-secondary mx-2">
+      <button routerLink="/AdminHome/manage-users" class="btn btn-secondary mx-2 mb-2">
         <i class="bi bi-arrow-left-circle"></i> رجوع
       </button>
-      <a *ngIf="user.pdfFile" [href]="getDownloadLink(user.pdfFile)" class="btn btn-info" download>تحميل PDF</a>
+      <a *ngIf="user.pdfFile" [href]="getDownloadLink(user.pdfFile)" class="btn btn-info mx-2 mb-2" download>
+        <i class="bi bi-file-earmark-arrow-down"></i> تحميل PDF
+      </a>
     </div>
   </div>
 </div>
+
+

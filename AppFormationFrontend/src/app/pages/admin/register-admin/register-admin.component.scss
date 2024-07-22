@@ -1,0 +1,42 @@
+.login-container {
+    background-color: #ffffff;
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .btn-link {
+    color: #007bff;
+  }
+
+  @media (max-width: 576px) {
+    .login-container {
+      padding: 15px;
+      box-shadow: none;
+    }
+
+    .btn {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .d-flex {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .d-flex > div {
+      width: 100%;
+      text-align: center;
+    }
+  }

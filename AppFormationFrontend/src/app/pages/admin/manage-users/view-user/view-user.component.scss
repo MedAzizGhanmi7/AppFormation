@@ -1,21 +1,56 @@
-/* Add these styles to your styles.scss or component-specific stylesheet */
+  .container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    padding: 15px;
-  }
-  
   .card {
-    background: #fff;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   }
-  
-  .text-center {
-    text-align: center;
+
+  h4 {
+    margin: 0;
   }
-  
-  .shadow-sm {
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+
+  .btn {
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
   }
-  
+
+  .btn-info {
+    color: #ffffff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+  }
+
+  .btn-info:hover {
+    color: #ffffff;
+    background-color: #138496;
+    border-color: #117a8b;
+  }
+
+  .btn-secondary {
+    color: #ffffff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+  }
+
+  .btn-secondary:hover {
+    color: #ffffff;
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+
+  @media (max-width: 576px) {
+    .row {
+      flex-direction: column;
+    }
+
+    .col-md-6 {
+      margin-bottom: 1rem;
+    }
+  }

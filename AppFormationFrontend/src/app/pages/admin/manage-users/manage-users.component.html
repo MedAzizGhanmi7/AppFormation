@@ -1,71 +1,74 @@
-<div class="container">
-  <div class="search-container">
-    <input style="direction: rtl;" type="text" placeholder="البحث" [(ngModel)]="searchText" (input)="searchUsers()">
+<div class="container-fluid py-4">
+  <div class="search-container mb-3">
+    <input style="direction: rtl; max-width: 400px; margin: auto;" type="text" class="form-control" placeholder="البحث" [(ngModel)]="searchText" (input)="searchUsers()">
   </div>
 
-  <div class="filter-container">
-    <select [(ngModel)]="selectedRole" (change)="filterUsersByRole()">
+  <div class="filter-container d-flex justify-content-between mb-4 flex-wrap">
+    <select class="form-select me-2 mb-2" style="max-width: 200px;" [(ngModel)]="selectedRole" (change)="filterUsersByRole()">
       <option value="">جميع الأدوار</option>
       <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
     </select>
 
-    <select [(ngModel)]="sortOrder" (change)="sortUsers()">
+    <select class="form-select me-2 mb-2" style="max-width: 200px;" [(ngModel)]="sortOrder" (change)="sortUsers()">
       <option value="recent">الأحدث</option>
       <option value="old">الأقدم</option>
     </select>
 
-    <select [(ngModel)]="accountStatus" (change)="filterUsersByAccountStatus()">
+    <select class="form-select mb-2" style="max-width: 200px;" [(ngModel)]="accountStatus" (change)="filterUsersByAccountStatus()">
       <option value="">جميع الحسابات</option>
       <option value="locked">مقفل</option>
       <option value="unlocked">غير مقفل</option>
     </select>
   </div>
 
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">الإجراءات</th>
-        <th scope="col">تاريخ الإنشاء</th>
-        <th scope="col">التحقق من البريد الإلكتروني</th>
-        <th scope="col">حالة القفل</th>
-        <th scope="col">الدور</th>
-        <th scope="col">البريد الإلكتروني</th>
-        <th scope="col">CIN</th>
-        <th scope="col">الاسم الأخير</th>
-        <th scope="col">الاسم الأول</th>
-        <th scope="col">#</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of filteredUsers; let i = index">
-        <td>
-          <button (click)="deleteAccount(user.userId)" class="btn btn-danger"><i class="bi bi-trash"></i> حذف</button>
-          <button (click)="toggleAccount(user.userId)" class="btn" 
-            [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}"> قفل
-            <i class="bi" [ngClass]="{'bi-lock-fill': !user.accountLocked, 'bi-unlock-fill': user.accountLocked}"></i>
-          </button>
-          <button [routerLink]="['/AdminHome/view-User', user.userId]" class="btn btn-info"><i class="bi bi-eye-fill"></i> عرض</button>
-        </td>
-        <td>{{ user.createdDate | date:'dd/MM//yyyy' }}</td>
-        <td>
-          <i *ngIf="user.enabled" class="bi bi-check-circle" style="color: green;">مفعل</i>
-          <i *ngIf="!user.enabled" class="bi bi-x-circle" style="color: red;">معطل</i>
-        </td>
-        <td>
-          <i *ngIf="!user.accountLocked" class="bi bi-check-circle" style="color: green;">غير مقفل</i>
-          <i *ngIf="user.accountLocked" class="bi bi-x-circle" style="color: red;">مقفل</i>
-        </td>
-        <td>
-          <div *ngFor="let role of user.roles">
-            <span *ngIf="role.name !== 'USER'">{{ role.name }}</span>
-          </div>
-        </td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.cin }}</td>
-        <td>{{ user.lastname }}</td>
-        <td>{{ user.firstname }}</td>
-        <th scope="row">{{ i + 1 }}</th>
-      </tr>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">الإجراءات</th>
+          <th scope="col">تاريخ الإنشاء</th>
+          <th scope="col">  البريد الإلكتروني</th>
+          <th scope="col">حالة القفل</th>
+          <th scope="col">الدور</th>
+          <th scope="col">البريد الإلكتروني</th>
+          <th scope="col">CIN</th>
+          <th scope="col">الاسم الأخير</th>
+          <th scope="col">الاسم الأول</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredUsers; let i = index">
+          <td class="d-flex gap-2">
+            <button (click)="deleteAccount(user.userId)" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i> حذف</button>
+            <button (click)="toggleAccount(user.userId)" class="btn btn-sm" 
+              [ngClass]="{'btn-danger': !user.accountLocked, 'btn-success': user.accountLocked}"> قفل
+              <i class="bi" [ngClass]="{'bi-lock-fill': !user.accountLocked, 'bi-unlock-fill': user.accountLocked}"></i>
+            </button>
+            <button [routerLink]="['/AdminHome/view-User', user.userId]" class="btn btn-info btn-sm"><i class="bi bi-eye-fill"></i> عرض</button>
+          </td>
+          <td>{{ user.createdDate | date:'dd/MM//yyyy' }}</td>
+          <td>
+            <i *ngIf="user.enabled" class="bi bi-check-circle text-success"> مفعل</i>
+            <i *ngIf="!user.enabled" class="bi bi-x-circle text-danger"> معطل</i>
+          </td>
+          <td>
+            <i *ngIf="!user.accountLocked" class="bi bi-check-circle text-success"> غير مقفل</i>
+            <i *ngIf="user.accountLocked" class="bi bi-x-circle text-danger"> مقفل</i>
+          </td>
+          <td>
+            <div *ngFor="let role of user.roles">
+              <span *ngIf="role.name !== 'USER'">{{ role.name }}</span>
+            </div>
+          </td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.cin }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.firstname }}</td>
+          <th scope="row">{{ i + 1 }}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
